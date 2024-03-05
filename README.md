@@ -61,6 +61,8 @@ This option can be useful if you plan to use that terminal for other things.
 
 It should also be possible to launch the containers from the Docker Desktop application, however this has not been tested at this time.
 
+At this point you should be able to connect to the app through your browser via localhost.
+
 To shutdown the Docker containers simply do the following:
 
 Press `ctrl+c` to end the process, then run the command `sudo docker-compose down`.
