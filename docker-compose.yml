@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: rc
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: pwd
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - "./db:/docker-entrypoint-initdb.d"
+    networks:
+      - rc-net
+  www:
+    depends_on:
+      - db
+    build: .
+    image: php:8.3.4RC1-apache-bookworm
+    restart: always
+    volumes:
+      - "./www/:/var/www/html"
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - rc-net
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    networks:
+      - rc-net
+
+networks:
+  rc-net:
+    driver: bridge
