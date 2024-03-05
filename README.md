@@ -9,8 +9,8 @@
 **Recipe Community is currently in PRE-DEVELOPMENT**
 
 This will change to development shortly, however for now the application in its entirety only contains placeholder values and information.
-Currently, and during development certain things will not be production ready when it comes to things such as security.
-Certain information will be hard-coded to ease development, this will change for release. 
+Currently, and during development certain things will not be production ready when it comes to certain things; such as security.
+Certain information will be hard-coded (or empty) to ease development, this will change for release. 
 Of course if you are running this locally at anytime in a nondevelopment capacity you are free to alter these things to your liking.
 
 # How to use Recipe Community
@@ -42,7 +42,7 @@ The command to start docker manually can be found below:
 
 `$ sudo systemctl start docker`
 
-Navigate to the directory that your Recipe Community source code is located in and run the following command in a terminal:
+Navigate to the directory that your Recipe Community source code is located in and do the following in a terminal:
 
 The first time that you launch the docker containers you will need to build the images. To do so do the following:
 
@@ -61,12 +61,9 @@ This option can be useful if you plan to use that terminal for other things.
 
 It should also be possible to launch the containers from the Docker Desktop application, however this has not been tested at this time.
 
-To shutdown the Docker containers simply run the following in the terminal:
+To shutdown the Docker containers simply do the following:
 
-```
-ctrl+c
-sudo docker-compose down
-```
+Press `ctrl+c` to end the process, then run the command `sudo docker-compose down`.
 
 You can also disable the Docker daemon with the following command:
 
