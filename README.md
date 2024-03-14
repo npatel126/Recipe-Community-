@@ -6,10 +6,9 @@
 
 # !!!WARNING!!!
 
-**Recipe Community is currently in PRE-DEVELOPMENT**
+**Recipe Community is currently in ACTIVE DEVELOPMENT**
 
-This will change to development shortly, however for now the application in its entirety only contains placeholder values and information.
-Currently, and during development certain things will not be production ready when it comes to certain things; such as security.
+Currently things are not production ready when it comes to certain things; such as security.
 Certain information will be hard-coded (or empty) to ease development, this will change for release. 
 Of course if you are running this locally at anytime in a nondevelopment capacity you are free to alter these things to your liking.
 
@@ -82,12 +81,11 @@ rc
 |   |_ dump.sql
 |
 |_ www
-    |_ index.html
-    |_ test.php
+    |_ [application files; html, php]
 
 ```
 
 # Notes
 
-This is just an initial environment set up to enable development.
+Recipe Community is currently under early development.
 It will be iterated upon and improved.
