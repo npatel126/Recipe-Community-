@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Establish a database connection or exit with an error message
         $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
          // Check if the username already exists
-        $checkQuery = "SELECT username FROM Users WHERE username = ?";
+        $checkQuery = "SELECT username FROM users WHERE username = ?";
         $checkStmt = mysqli_prepare($connect, $checkQuery);
         mysqli_stmt_bind_param($checkStmt, "s", $inputs['username']);
         mysqli_stmt_execute($checkStmt);
@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($checkStmt);
         // Hash the password
         $hashedPassword = password_hash($inputs['password'], PASSWORD_DEFAULT);
-        // Insert user into the Users table
-        $query = "INSERT INTO Users (name, username, password) VALUES (?, ?, ?)";
+        // Insert user into the users table
+        $query = "INSERT INTO users (name, username, password) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($connect, $query);
         mysqli_stmt_bind_param($stmt, "sss", $inputs['name'], $inputs['username'], $hashedPassword);
         mysqli_stmt_execute($stmt);

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
     // Prepare and execute the query
-    $query = "SELECT username, password FROM Users WHERE username = ?";
+    $query = "SELECT username, password FROM users WHERE username = ?";
     $stmt = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
