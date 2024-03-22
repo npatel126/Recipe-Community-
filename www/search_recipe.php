@@ -24,8 +24,6 @@
         // Establish a database connection or exit with an error message
         $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
-        //TODO figure out how to do a glob search to locate strings
-        // ^ I think that's partially done
         //TODO figure out how to determine the category before search, that way we dont search for the wrong thing? i think? idk i have to get it to work first
 
         // Sanitize and validate form inputs
@@ -36,8 +34,6 @@
         $title = "";
         $description = "";
         $category = "";
-
-
 
         // Search DB for recipe(s) matching description
         $query = "SELECT title, description, category FROM recipes WHERE $type LIKE '%$search%' OR $type LIKE '%$search' OR $type LIKE '$search%'; ";
@@ -74,9 +70,12 @@
 
     </table>
 
-    <!-- TODO: this will need to change with user sessions -->
-    <form action="./index.html" method="post">
-        <input type="submit" value="Return Home">
+    <!-- TODO: this will probably need to change with user sessions -->
+    <form>
+        <p>
+            <input type="submit" formaction="./search_recipe.html" value="Search Again!">
+            <input type="submit" formaction="./index.html" value="Return Home">
+        </p>
     </form>
 
 </body>

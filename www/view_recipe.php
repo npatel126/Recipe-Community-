@@ -59,7 +59,7 @@
         print("<h3>Total time: $total_time min</h3>");
         print("<h3>Servings: $servings</h3>");
         print("<h2>Ingredients:</h2>");
-        for ($i=0; $i < sizeof($list); $i++) { 
+        for ($i = 0; $i < sizeof($list); $i++) {
             print("<p><input type=\"checkbox\"/> $list[$i]</p>");
         }
         //print("<p>$ingredients</p>");
@@ -75,15 +75,14 @@
 
     ?>
 
-    <!-- TODO: this will need to change with user sessions -->
-    <form action="./search_recipe.html" method="post">
-        <input type="submit" value="Search again!">
+    <!-- TODO: this will probably need to change with user sessions -->
+    <form>
+        <p>
+            <input type="submit" formaction="./search_recipe.html" value="Search Again!">
+            <input type="submit" formaction="./index.html" value="Return Home">
+        </p>
     </form>
 
-    <!-- TODO: this will need to change with user sessions -->
-    <form action="./index.html" method="post">
-        <input type="submit" value="Return Home">
-    </form>
 </body>
 
 </html>
