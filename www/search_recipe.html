@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Search</title>
+    <!--
+        <link href="css/style.css" rel="stylesheet">
+        -->
+</head>
+
+<body>
+    <h1>Search for a recipe</h1>
+
+    <form action="./search_recipe.php" method="post">
+        <label for="search">Search for:</label>
+        <input type="text" id="search" name="search" required>
+
+        <label for="type">Search type:</label>
+        <select name="type">
+            <option value="title">Title</option>
+            <option value="category">Category</option>
+            <option value="prep_time">Prep Time</option>
+            <option value="cook_time">Cook Time</option>
+            <option value="total_time">Total Time</option>
+            <option value="servings">Servings</option>
+        </select>
+
+        <!-- TODO: weird behavior because of the required -->
+        <p>
+            <input type="submit" formaction="./index.html" value="Cancel">
+            <input type="submit" value="Search!">
+        </p>
+    </form>
+
+</body>
+
+</html>
