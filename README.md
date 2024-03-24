@@ -10,13 +10,13 @@
 
 Currently things are not production ready when it comes to certain things; such as security.
 Certain information will be hard-coded (or empty) to ease development, this will change for release. 
-Of course if you are running this locally at anytime in a nondevelopment capacity you are free to alter these things to your liking.
+Of course if you are running this locally at any time in a non-development capacity you are free to alter these things to your liking.
 
 # How to use Recipe Community
 
 Recipe Community currently runs on a LAMP stack hosted inside of a Docker container cluster.
-If you already have Docker installed on your system you are ready to go to the next step.
-If not you can refer to the below links for instructions on how to install Docker on your machine.
+If you already have Docker installed on your system, you are ready to go to the next step.
+If not, you can refer to the below links for instructions on how to install Docker on your machine.
 
 ## How to install Docker
 
@@ -43,7 +43,7 @@ The command to start docker manually can be found below:
 
 Navigate to the directory that your Recipe Community source code is located in and do the following in a terminal:
 
-The first time that you launch the docker containers you will need to build the images. To do so do the following:
+The first time that you launch the docker containers you will need to build the images. To do so, do the following:
 
 `$ sudo docker-compose up --build`
 
@@ -84,6 +84,12 @@ rc
     |_ [application files; html, php]
 
 ```
+
+The `db` directory contains the SQL file that will be used for initializing the DB when the containers start.
+
+The `www` directory contains the HTML and PHP files that make up the body of the application.
+
+The files that relate to the Docker containers are located in the root directory of the project.
 
 # Notes
 
