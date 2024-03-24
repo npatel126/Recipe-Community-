@@ -7,8 +7,14 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     UNIQUE (username)
 );
+
+
 -- Example add admin user.
 INSERT INTO users (username, name, password) VALUES ('admin', 'admin', '$2y$10$54/Xfan9DY9UK0CPH60d6uuYkHkK10gERf6hI9dyIpM25.CPd/rcq');
+-- Test user for Mia
+INSERT INTO users (username, name, password) VALUES ('miazine', 'Mia', '$2y$10$L9UsivvQlLjsKzUrrHplEevdcDNiN.aDZ05Yt.DbqcFkbJKyn/wMa');
+-- Test user for Phil
+INSERT INTO users (username, name, password) VALUES ('philbert', 'Phil', '$2y$10$X/1njNRoPduetVO4ZS4WMeG2pNDIQgNYYoDnXgrhRL9SxnkJofPiO');
 
 CREATE TABLE recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,3 +47,6 @@ VALUES (
         8. Serve hot, garnished with grated Parmesan cheese if desired.',
     10, 20, 30, 2, 1
 );
+
+-- Example recipe 2 (contains "tomato" in title to display multiple results)
+-- Example recipe 3 (just another recipe)
