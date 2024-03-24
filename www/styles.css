@@ -5,6 +5,11 @@ body {
     padding: 0;
 }
 
+.home {
+    margin: 20px;
+    padding: 20px;
+}
+
 main {
     max-width: 400px;
     margin: 50px auto;
