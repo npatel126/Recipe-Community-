@@ -64,6 +64,10 @@ It should also be possible to launch the containers from the Docker Desktop appl
 
 At this point you should be able to connect to the app through your browser via localhost.
 
+#### Note: 
+
+The database container takes a bit to fully spin up to a usable state, certain functionality will return errors until it becomes accessible. 
+
 To shutdown the Docker containers simply do the following:
 
 Press `ctrl+c` to end the process, then run the command `sudo docker-compose down`.
