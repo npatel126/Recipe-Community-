@@ -45,30 +45,28 @@
         $stmt->bind_result($title, $description, $category);
     }
 
-    print("<h1> Search Results for $search </h1>");
+    if ($stmt->fetch()) {
+
+        print("<h1> Search Results for $search </h1>");
+
+        print("<table border=1>");
+        print("<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
+
+        do {
+            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$title\">View this Recipe!</a></td></tr>");
+        } while ($stmt->fetch());
+
+        print("</table>");
+    } else {
+        print("<h1> $search returned no results </h1>");
+    }
+
+    // close statement
+    $stmt->close();
+    // close connection with db
+    mysqli_close($connect);
     ?>
 
-    <table border=1>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>View</th>
-        </tr>
-
-        <?php
-
-        while ($stmt->fetch()) {
-            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$title\">View this Recipe!</a></td></tr>");
-        }
-
-        // close statement
-        $stmt->close();
-        // close connection with db
-        mysqli_close($connect);
-        ?>
-
-    </table>
 
     <!-- TODO: this will probably need to change with user sessions -->
     <form>
