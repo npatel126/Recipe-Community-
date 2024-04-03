@@ -28,8 +28,10 @@
         </select>
 
         <!-- TODO: this will probably need to change with user sessions -->
+        <!-- TODO: later maybe change view all to view favorites or something similar (wouldn't want to view all of a super large db)-->
         <p>
             <input type="submit" value="Search!">
+            <input type="submit" formaction="./view_all.php" value="View all Recipes!" formnovalidate>
             <input type="submit" formaction="./index.html" value="Cancel" formnovalidate>
         </p>
     </form>
