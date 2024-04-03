@@ -48,9 +48,11 @@
 
     // Is this really how this has to be done?
     // TODO: figure out how to "pretty print" things like the ingredients and instructions
-    // TODO; either do everything in mins or add the ability to convert to hours
+    // TODO: either do everything in mins or add the ability to convert to hours
+    // TODO: trim
     while ($stmt->fetch()) {
-        $list = explode(',', $ingredients);
+        $ingredients_list = explode('|', $ingredients);
+        $instructions_list = explode('|', $instructions);
         print("<h1>$title</h1>");
         print("<h2>Description: $description</h2>");
         print("<h3>Category: $category</h3>");
@@ -59,12 +61,14 @@
         print("<h3>Total time: $total_time min</h3>");
         print("<h3>Servings: $servings</h3>");
         print("<h2>Ingredients:</h2>");
-        for ($i = 0; $i < sizeof($list); $i++) {
-            print("<p><input type=\"checkbox\"/> $list[$i]</p>");
+        for ($i = 0; $i < sizeof($ingredients_list); $i++) {
+            print("<p><input type=\"checkbox\"/> $ingredients_list[$i]</p>");
         }
-        //print("<p>$ingredients</p>");
         print("<h2>Instructions:</h2>");
-        print("<p>$instructions</p>");
+        // TODO: consider checking if the first position in each string is a number and if not display one??
+        for ($i=0; $i < sizeof($instructions_list); $i++) { 
+            print("<p>$instructions_list[$i]</p>");
+        }
     }
 
     // TODO This can probably be moved up??? testing
