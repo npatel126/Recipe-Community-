@@ -10,12 +10,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Establish a database connection or exit with an error message
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
+    /*
+ * This function replaces the html break with a pipe ("|")
+ * In order to get the ingredients and instructions to display correctly we are replacing new lines with breaks and then converting those breaks into pipes so that they can be stored in the db as a single line but exploded upon retrieval for formatted display
+ */
+    function br2pipe($input)
+    {
+        // this nasty pattern is what's needed to replace "<br />" with "|" for some reason
+        $pattern = '/&lt;br \/&gt;/';
+        $replacement = '|';
+        return preg_replace($pattern, $replacement, $input, -1);
+    }
+
     // Sanitize and validate form inputs
     $title = htmlspecialchars($_POST["title"]);
     $description = htmlspecialchars($_POST["description"]);
     $category = htmlspecialchars($_POST["category"]);
-    $ingredients = htmlspecialchars($_POST["ingredients"]);
-    $instructions = htmlspecialchars($_POST["instructions"]);
+    // Here ingredient's & instruction's inputs are undergoing the following chain:
+    // raw in -> new lines => html breaks -> html breaks retained -> html breaks => pipes
+    //
+    // TODO: TBH I'm not sure if the htmlspecialchars call is necessary, look into
+    $ingredients = br2pipe(htmlspecialchars(nl2br($_POST["ingredients"])));
+    $instructions = br2pipe(htmlspecialchars(nl2br($_POST["instructions"])));
     $prep_time = intval($_POST["prep_time"]);
     $cook_time = intval($_POST["cook_time"]);
     $total_time = intval($_POST["total_time"]);
@@ -37,5 +53,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Display success message
     echo '<p>Recipe added successfully!</p>';
+    print("<form><p><input type=\"submit\" formaction=\"./index.html\" value=\"Return Home\"</p></form>");
 }
-?>
