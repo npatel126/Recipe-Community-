@@ -54,7 +54,7 @@ VALUES (
 -- Source: https://cooking.nytimes.com/recipes/1020272-tomato-bruschetta
 INSERT INTO recipes (title, description, category, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
-    'Tomato Bruchetta',
+    'Tomato Bruschetta',
     'A light Italian appetizer.',
     'Appetizer',
     '1 lbs tomatoes| 1 teaspon kosher salt| 5 tablespoons extra-virgin olive oil| 2 large garlic cloves (minced)| 8 large basil leaves| grilled/toasted bread (for serving)',
