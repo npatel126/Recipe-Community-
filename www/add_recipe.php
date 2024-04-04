@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function br2pipe($input)
     {
         // this nasty pattern is what's needed to replace "<br />" with "|" for some reason
+        // edit: the reason is because the htmlspecialchars func call is replacing < & > with &lt; and &gt; respectively  
+        // TODO: see about going straight from newline to pipe?
         $pattern = '/&lt;br \/&gt;/';
         $replacement = '|';
         return preg_replace($pattern, $replacement, $input, -1);
