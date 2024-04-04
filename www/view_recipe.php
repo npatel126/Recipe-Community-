@@ -46,19 +46,33 @@
         $stmt->bind_result($recipe_id, $title, $description, $category, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
     }
 
-    // Is this really how this has to be done?
-    // TODO: figure out how to "pretty print" things like the ingredients and instructions
-    // TODO: either do everything in mins or add the ability to convert to hours
-    // TODO: trim
+    function format_time($time)
+    {
+        $formatted_time = null;
+        if ($time > 60) {
+            $formatted_time = intdiv($time, 60) . " hr(s) " . $time % 60 . " min";
+        } elseif ($time == 60) {
+            $formatted_time = "1 hr";
+        } else {
+            // if time is less than an hr do nothing and display it as is
+            $formatted_time = $time . " min";
+        }
+        return $formatted_time;
+    }
+
+    // TODO: trim ???
     while ($stmt->fetch()) {
         $ingredients_list = explode('|', $ingredients);
         $instructions_list = explode('|', $instructions);
+        $formatted_prep = format_time($prep_time);
+        $formatted_cook = format_time($cook_time);
+        $formatted_total = format_time($total_time);
         print("<h1>$title</h1>");
         print("<h2>Description: $description</h2>");
         print("<h3>Category: $category</h3>");
-        print("<h3>Prep time: $prep_time min</h3>");
-        print("<h3>Cook time: $cook_time min</h3>");
-        print("<h3>Total time: $total_time min</h3>");
+        print("<h3>Prep time: $formatted_prep </h3>");
+        print("<h3>Cook time: $formatted_cook </h3>");
+        print("<h3>Total time: $formatted_total </h3>");
         print("<h3>Servings: $servings</h3>");
         print("<h2>Ingredients:</h2>");
         for ($i = 0; $i < sizeof($ingredients_list); $i++) {
@@ -66,7 +80,7 @@
         }
         print("<h2>Instructions:</h2>");
         // TODO: consider checking if the first position in each string is a number and if not display one??
-        for ($i=0; $i < sizeof($instructions_list); $i++) { 
+        for ($i = 0; $i < sizeof($instructions_list); $i++) {
             print("<p>$instructions_list[$i]</p>");
         }
     }
