@@ -28,6 +28,7 @@
     $title = "";
     $description = "";
     $category = "";
+    $cuisine = "";
     $ingredients = "";
     $instructions = "";
     $prep_time = "";
@@ -43,7 +44,7 @@
 
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($recipe_id, $title, $description, $category, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
+        $stmt->bind_result($recipe_id, $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
     }
 
     function format_time($time)
@@ -70,6 +71,7 @@
         print("<h1>$title</h1>");
         print("<h2>Description: $description</h2>");
         print("<h3>Category: $category</h3>");
+        print("<h3>Cuisine: $cuisine</h3>");
         print("<h3>Prep time: $formatted_prep </h3>");
         print("<h3>Cook time: $formatted_cook </h3>");
         print("<h3>Total time: $formatted_total </h3>");
@@ -97,7 +99,7 @@
     <form>
         <p>
             <input type="submit" formaction="./search_recipe.html" value="Search Again!">
-            <input type="submit" formaction="./index.html" value="Return Home">
+            <input type="submit" formaction="./index.php" value="Return Home">
         </p>
     </form>
 
