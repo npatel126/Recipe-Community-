@@ -23,6 +23,7 @@ CREATE TABLE recipes (
     title VARCHAR(100),
     description TEXT,
     category VARCHAR(20),
+    cuisine VARCHAR(20),
     ingredients TEXT,
     instructions TEXT,
     prep_time INT,
@@ -33,11 +34,12 @@ CREATE TABLE recipes (
     FOREIGN KEY (creator_id) REFERENCES users(user_id)
 );
 -- Example recipe.
-INSERT INTO recipes (title, description, category, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Classic Tomato Basil Pasta',
     'A light and refreshing pasta dish with ripe tomatoes, fresh basil, and garlic.',
     'Main Course',
+    'Italian',
     '200g spaghetti| 4 ripe tomatoes (diced)| 3 cloves garlic (minced)| 1/4 cup extra-virgin olive oil| Fresh basil leaves (chopped)| Salt and pepper (to taste)',
     '1. Cook the spaghetti in salted boiling water until al dente. Reserve some pasta water.|
         2. While the pasta cooks, heat olive oil in a skillet over medium heat.|
@@ -52,11 +54,12 @@ VALUES (
 
 -- Example recipe 2 (contains "tomato" in title to display multiple results)
 -- Source: https://cooking.nytimes.com/recipes/1020272-tomato-bruschetta
-INSERT INTO recipes (title, description, category, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Tomato Bruschetta',
     'A light Italian appetizer.',
     'Appetizer',
+    'Italian',
     '1 lbs tomatoes| 1 teaspon kosher salt| 5 tablespoons extra-virgin olive oil| 2 large garlic cloves (minced)| 8 large basil leaves| grilled/toasted bread (for serving)',
     '1. Core and chop the tomatoes, then transfer to a colander over a bowl or in the sink. Add the salt and gently stir. Let drain for up to 2 hours.|
     2. Meanwhile, make the garlic oil: In a small saucepan, warm the olive oil and garlic over low heat until the garlic is softened and fragrant, about 5 minutes, making sure the garlic doesn’t brown. Set aside to cool.|
@@ -66,11 +69,12 @@ VALUES (
 );
 -- Example recipe 3 (just another recipe)
 -- Source: https://www.twopeasandtheirpod.com/pomegranate-white-chocolate-chunk-cookies/
-INSERT INTO recipes (title, description, category, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Pomegranate White Chocolate Chunk Cookies',
     'Delicious oatmeal cookies with pomegranate and white chocolate.',
     'Dessert',
+    'Unknown',
     '1/2 cup unsalted butter (room temp)| 1/2 cup light brown sugar| 1/2 cup granulated sugar| 1 large egg| 1 teaspoon vanilla extract| 1 1/4 cup all purpose flour| 1/2 teaspoon baking powder| 1/2 teaspoon baking soda| 1/4 teaspoon salt| 1 cup oats| 1 cup white chocolate chunks| 1 cup pomegranate arils',
     '1. Preheat the oven to 375 degrees F. Line a large baking sheet with parchment paper or a silicone baking mat and set aside.|
     2. In the bowl of a stand mixer, cream butter and sugars together until smooth. Add the egg and vanilla extract and mix until well combined.|
