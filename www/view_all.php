@@ -71,7 +71,7 @@
     <form>
         <p>
             <input type="submit" formaction="./search_recipe.html" value="Search Again!">
-            <input type="submit" formaction="./index.html" value="Return Home">
+            <input type="submit" formaction="./index.php" value="Return Home">
         </p>
     </form>
 
