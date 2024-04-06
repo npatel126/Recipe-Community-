@@ -1,4 +1,13 @@
+<?php
+    session_start();
+    if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+        echo "Welcome, " . $_SESSION["username"];
+    } else {
+        echo "Not logged in.";
+    }
+?>
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -46,22 +55,20 @@
             Recipe Community hopes to become <i>your</i> go-to place for both finding recipes and sharing your passions
             about food with others!
         </p>
-
-        <!-- TODO: this will need to move with user session ???-->
-        <h2>
-            Add recipe
-        </h2>
-        <form action="./add_recipe.html">
-            <input type="submit" value="Click here to add recipe!">
+        
+        <?php if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE): ?>
+        <!-- Button for Dashboard -->
+        <h2>Dashboard</h2>
+        <form action="dashboard.php">
+            <input type="submit" value="Go to Dashboard">
         </form>
-
-        <!-- TODO: this will need to move with user session ???-->
         <h2>
             Search recipe
         </h2>
         <form action="./search_recipe.html">
             <input type="submit" value="Click here to search recipe!">
         </form>
+        <?php else: ?>
 
         <h2>
             Don't have an account and would like to join the Recipe Community?
@@ -76,7 +83,7 @@
         <form action="./login.html">
             <input type="submit" value="Click here to login to your account!">
         </form>
-
+        <?php endif; ?>
 
     </div>
 </body>
