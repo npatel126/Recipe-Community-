@@ -1,4 +1,5 @@
 <?php
+
 // Database connection details
 $server = "db";
 $user = "admin";
@@ -9,7 +10,23 @@ $db = "rc";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Establish a database connection or exit with an error message
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
-
+    
+    session_start();
+    
+    if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+        $username = $_SESSION["username"];
+        $query = "SELECT user_id FROM users WHERE username = ?";
+        $stmt = mysqli_prepare($connect, $query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->bind_result($creator_id);
+        $stmt->fetch();
+        $stmt->close();
+        echo $creator_id;
+    } else {
+       header("Location: index.php");
+       exit;
+    }
     /*
  * This function replaces the html break with a pipe ("|")
  * In order to get the ingredients and instructions to display correctly we are replacing new lines with breaks and then converting those breaks into pipes so that they can be stored in the db as a single line but exploded upon retrieval for formatted display
@@ -28,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = htmlspecialchars($_POST["title"]);
     $description = htmlspecialchars($_POST["description"]);
     $category = htmlspecialchars($_POST["category"]);
+    $cuisine = htmlspecialchars($_POST["cuisine"]);
     // Here ingredient's & instruction's inputs are undergoing the following chain:
     // raw in -> new lines => html breaks -> html breaks retained -> html breaks => pipes
     //
@@ -38,14 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cook_time = intval($_POST["cook_time"]);
     $total_time = intval($_POST["total_time"]);
     $servings = intval($_POST["servings"]);
-    // Creator id is admin for now.
-    $creator_id = 1;
 
     // Insert recipe into the database
-    $query = "INSERT INTO recipes (title, description, category, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($stmt, "ssssssssss", $title, $description, $category, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
+    mysqli_stmt_bind_param($stmt, "ssssssssss", $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
     mysqli_stmt_execute($stmt);
     // Close the statement for recipe insertion
     mysqli_stmt_close($stmt);
@@ -55,5 +71,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Display success message
     echo '<p>Recipe added successfully!</p>';
-    print("<form><p><input type=\"submit\" formaction=\"./index.html\" value=\"Return Home\"</p></form>");
+    print("<form><p><input type=\"submit\" formaction=\"./index.php\" value=\"Return Home\"</p></form>");
 }
