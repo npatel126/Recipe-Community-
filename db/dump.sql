@@ -1,6 +1,9 @@
 USE `rc`;
 
+-- Allow for "fancy" characters
 SET NAMES 'utf8mb4';
+
+-- Create tables
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,14 +12,6 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     UNIQUE (username)
 );
-
-
--- Example add admin user.
-INSERT INTO users (username, name, password) VALUES ('admin', 'admin', '$2y$10$54/Xfan9DY9UK0CPH60d6uuYkHkK10gERf6hI9dyIpM25.CPd/rcq');
--- Test user for Mia
-INSERT INTO users (username, name, password) VALUES ('miazine', 'Mia', '$2y$10$L9UsivvQlLjsKzUrrHplEevdcDNiN.aDZ05Yt.DbqcFkbJKyn/wMa');
--- Test user for Phil
-INSERT INTO users (username, name, password) VALUES ('philbert', 'Phil', '$2y$10$X/1njNRoPduetVO4ZS4WMeG2pNDIQgNYYoDnXgrhRL9SxnkJofPiO');
 
 CREATE TABLE recipes (
     recipe_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,6 +28,18 @@ CREATE TABLE recipes (
     creator_id INT,
     FOREIGN KEY (creator_id) REFERENCES users(user_id)
 );
+
+-- Example/Testing Data entry
+
+-- Example add admin user.
+INSERT INTO users (username, name, password) VALUES ('admin', 'admin', '$2y$10$54/Xfan9DY9UK0CPH60d6uuYkHkK10gERf6hI9dyIpM25.CPd/rcq');
+
+-- Test user for Mia
+INSERT INTO users (username, name, password) VALUES ('miazine', 'Mia', '$2y$10$L9UsivvQlLjsKzUrrHplEevdcDNiN.aDZ05Yt.DbqcFkbJKyn/wMa');
+
+-- Test user for Phil
+INSERT INTO users (username, name, password) VALUES ('philbert', 'Phil', '$2y$10$X/1njNRoPduetVO4ZS4WMeG2pNDIQgNYYoDnXgrhRL9SxnkJofPiO');
+
 -- Example recipe.
 INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
@@ -57,6 +64,7 @@ VALUES (
     '1. Core and chop the tomatoes, then transfer to a colander over a bowl or in the sink. Add the salt and gently stir. Let drain for up to 2 hours.|2. Meanwhile, make the garlic oil: In a small saucepan, warm the olive oil and garlic over low heat until the garlic is softened and fragrant, about 5 minutes, making sure the garlic doesn’t brown. Set aside to cool.|3. Roll the basil leaves up and thinly slice crosswise.|4. When the oil is cool and the tomatoes are well drained, combine the tomatoes, garlic oil and basil in a medium bowl. Season with additional salt, to taste. Spoon over toasted bread.',
     130, 20, 150, 4, 3
 );
+
 -- Example recipe 3 (just another recipe)
 -- Source: https://www.twopeasandtheirpod.com/pomegranate-white-chocolate-chunk-cookies/
 INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
