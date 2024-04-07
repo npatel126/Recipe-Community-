@@ -107,3 +107,8 @@ VALUES (
     '1. Preheat the oven to 375 degrees F. Line a large baking sheet with parchment paper or a silicone baking mat and set aside.|2. In the bowl of a stand mixer, cream butter and sugars together until smooth. Add the egg and vanilla extract and mix until well combined.|3. In a separate bowl whisk together flour, baking powder, baking soda, and salt. Slowly add flour mixture to the wet ingredients. Mix until just incorporated.|4. Stir in the oats and white chocolate chunks. Make dough balls-about 1 tablespoon of dough per cookie. Tuck about 6-8 pomegranate arils in each cookie dough ball. Bake cookies for 10-12 minutes, until the cookies are golden brown. Remove from oven and let cool on baking sheet for two minutes. Transfer to a wire rack to finish cooling.',
     30, 10, 40, 30, 2
 );
+
+-- Favorites testing
+INSERT INTO favorites (owner_id, recipe_id) VALUES (2, 1);
+INSERT INTO favorites (owner_id, recipe_id) VALUES (2, 2);
+
