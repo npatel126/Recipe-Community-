@@ -37,8 +37,9 @@
             <h2>Actions</h2>
             <ul>
                 <?php if (isset($_SESSION["username"])): ?>
-                    <li><button onclick="window.location.href = 'add_recipe.html';">Add Recipe</button></li>
+                    <li><button onclick="window.location.href = 'view_favorites.php';">View Your Favorite Recipes</button></li>
                     <li><button onclick="window.location.href = 'search_recipe.html';">Search Recipes</button></li>
+                    <li><button onclick="window.location.href = 'add_recipe.html';">Add Recipe</button></li>
                     <li><button onclick="window.location.href = 'user_recipes.php';">View Your Recipes</button></li>
                 <?php endif; ?>
             </ul>
