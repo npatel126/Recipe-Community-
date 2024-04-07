@@ -1,3 +1,15 @@
+<?php
+// Start the session
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: index.php");
+    exit; // Exit the script if the user is not logged in
+}
+$user_id = $_SESSION["user_id"];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,9 +99,68 @@
         }
     }
 
-    // TODO This can probably be moved up??? testing
     // close statement
     $stmt->close();
+
+    // add/remove from favorites
+    // if not in favorites display add 
+    // if in favorites display remove
+
+    function check_favorite($connect, $u_id, $r_id)
+    {
+        $is_favorite = false;
+        $is_owner = null;
+        $query = "SELECT owner_id FROM favorites WHERE recipe_id = $r_id ;";
+        $stmt = "";
+        if ($stmt = $connect->prepare($query)) {
+            $stmt->execute();
+            $stmt->bind_result($is_owner);
+        }
+        while ($stmt->fetch()) {
+            if ($is_owner != null && $is_owner == $u_id) {
+                $is_favorite = true;
+            }
+        }
+        $stmt->close();
+        return $is_favorite;
+    }
+
+    // TODO: These two functions (add/remove favorite) probably need better checks for db stuff
+
+    function add_favorite($connect, $u_id, $r_id)
+    {
+        $query = "INSERT INTO favorites (owner_id, recipe_id) VALUES (?, ?); ";
+        $stmt = mysqli_prepare($connect, $query);
+        mysqli_stmt_bind_param($stmt, "ii", $u_id, $r_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+    function remove_favorite($connect, $u_id, $r_id)
+    {
+        $query = "DELETE FROM favorites WHERE owner_id = $u_id AND recipe_id = $r_id; ";
+        $stmt = mysqli_prepare($connect, $query);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+    if(isset($_POST['favorite'])) {
+        add_favorite($connect, $user_id, $recipe_id);
+    } 
+    if(isset($_POST['unfavorite'])){
+        remove_favorite($connect, $user_id, $recipe_id);
+    }
+
+    if (check_favorite($connect, $user_id, $recipe_id)) {
+        # is in favorites
+        print("<p> <i>This recipe is in your favorites.</i> </p>");
+        print("<form method=\"post\"><p><input type=\"submit\" name=\"unfavorite\" value=\"Unfavorite!\"></p></form>");
+    } else {
+        # is not in favorites
+        print("<p> <i>This recipe is not in your favorites.</i> </p>");
+        print("<form method=\"post\"><p><input type=\"submit\" name=\"favorite\" value=\"Favorite!\"></p></form>");
+    }
+
+
     // close connection with db
     mysqli_close($connect);
 
