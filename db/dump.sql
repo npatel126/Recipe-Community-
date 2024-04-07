@@ -47,8 +47,8 @@ CREATE TABLE recipes (
     servings INT,
     creator_id INT,
     -- cookbook_id INT,
-    FOREIGN KEY (creator_id) REFERENCES users(user_id),
-    FOREIGN KEY (cookbook_id) REFERENCES cookbooks(cookbook_id)
+    -- FOREIGN KEY (cookbook_id) REFERENCES cookbooks(cookbook_id),
+    FOREIGN KEY (creator_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE favorites (
