@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_result($creator_id);
         $stmt->fetch();
         $stmt->close();
+        //TODO: edit/remove/turn into the creators name
         echo $creator_id;
     } else {
        header("Location: index.php");
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($stmt, "ssssssssss", $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
+    mysqli_stmt_bind_param($stmt, "sssssssssss", $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
     mysqli_stmt_execute($stmt);
     // Close the statement for recipe insertion
     mysqli_stmt_close($stmt);
