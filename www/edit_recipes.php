@@ -18,11 +18,12 @@ $db = "rc";
 $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
 function br2pipe($input)
-    {
-        $pattern = '/&lt;br \/&gt;/';
-        $replacement = '|';
-        return preg_replace($pattern, $replacement, $input, -1);
-    }
+{
+    $pattern = '/&lt;br \/&gt;/';
+    $replacement = '|';
+    return preg_replace($pattern, $replacement, $input, -1);
+}
+
 
 // Retrieve the user ID from the session
 $user_id = $_SESSION['user_id'];
@@ -74,7 +75,7 @@ if (isset($_GET['recipe_id'])) {
 
     // Query to retrieve the recipe details based on recipe_id and creator_id
     $query = "SELECT title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings FROM recipes WHERE recipe_id = ? AND creator_id = ?";
-    
+
     // Prepare the query
     $stmt = mysqli_prepare($connect, $query);
 
@@ -98,19 +99,28 @@ if (isset($_GET['recipe_id'])) {
 mysqli_close($connect);
 
 // Remove the pipe character from ingredients and instructions
-$ingredients = str_replace('|', '', $ingredients);
-$instructions = str_replace('|', '', $instructions);
+// &#13; Carriage Return
+// &#10; Line Feed 
+// TODO: this dispalays a new line, however it also keeps it around when so when it goes back to the db it has 2 "||" and just grows with each edit save
+// TODO: we're also getting spaces that are appearing out of nowhere?
+//print_r(htmlspecialchars($ingredients));
+$ingredients = str_replace('|', '&#10;', $ingredients);
+$instructions = str_replace('|', '&#10;', $instructions);
+
+//print_r(htmlspecialchars($ingredients));
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Recipe</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <main>
         <h1>Edit Recipe</h1>
@@ -128,10 +138,10 @@ $instructions = str_replace('|', '', $instructions);
             <input type="text" id="cuisine" name="cuisine" value="<?php echo htmlspecialchars($cuisine); ?>" required>
 
             <label for="ingredients">Ingredients (enter each new ingredient on a new line):</label>
-            <textarea id="ingredients" name="ingredients" rows="4" cols="50" required><?php echo htmlspecialchars($ingredients); ?></textarea>
+            <textarea id="ingredients" name="ingredients" rows="4" cols="50" required><?php echo $ingredients; ?></textarea>
 
             <label for="instructions">Instructions (enter each new instruction on a new line):</label>
-            <textarea id="instructions" name="instructions" rows="6" cols="50" required><?php echo htmlspecialchars($instructions); ?></textarea>
+            <textarea id="instructions" name="instructions" rows="6" cols="50" required><?php echo $instructions; ?></textarea>
 
             <label for="prep_time">Prep Time (minutes):</label>
             <input type="number" id="prep_time" name="prep_time" min="0" value="<?php echo htmlspecialchars($prep_time); ?>" required>
@@ -150,4 +160,5 @@ $instructions = str_replace('|', '', $instructions);
         </form>
     </main>
 </body>
+
 </html>
