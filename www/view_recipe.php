@@ -34,7 +34,6 @@ $user_id = $_SESSION["user_id"];
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
     $search = $_GET['link'];
-
     // init vars for query return
     $recipe_id = "";
     $title = "";
@@ -47,16 +46,20 @@ $user_id = $_SESSION["user_id"];
     $cook_time = "";
     $total_time = "";
     $servings = "";
-    // TODO: figure out how to display author by name
     $creator_id = "";
+    $creator_username = "";
 
     // Search DB for recipe(s) matching description
-    $query = "SELECT * FROM recipes WHERE title = '$search'; ";
+    $query = "SELECT r.recipe_id, r.title, r.description, r.category, r.cuisine, r.ingredients, r.instructions, r.prep_time, r.cook_time, r.total_time, r.servings, r.creator_id, u.username
+              FROM recipes r
+              INNER JOIN users u ON r.creator_id = u.user_id
+              WHERE r.recipe_id = '$search'; ";
+
     $stmt = mysqli_prepare($connect, $query);
 
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($recipe_id, $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
+        $stmt->bind_result($recipe_id, $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id, $creator_username);
     }
 
     function format_time($time)
@@ -72,7 +75,7 @@ $user_id = $_SESSION["user_id"];
         }
         return $formatted_time;
     }
-
+    
     // TODO: trim ???
     while ($stmt->fetch()) {
         $ingredients_list = explode('|', $ingredients);
@@ -81,6 +84,7 @@ $user_id = $_SESSION["user_id"];
         $formatted_cook = format_time($cook_time);
         $formatted_total = format_time($total_time);
         print("<h1>$title</h1>");
+        print("<h1>Creator: $creator_username</h1>");
         print("<h2>Description: $description</h2>");
         print("<h3>Category: $category</h3>");
         print("<h3>Cuisine: $cuisine</h3>");
@@ -98,9 +102,9 @@ $user_id = $_SESSION["user_id"];
             print("<p>$instructions_list[$i]</p>");
         }
     }
-
     // close statement
     $stmt->close();
+    
 
     // add/remove from favorites
     // if not in favorites display add 
@@ -165,12 +169,10 @@ $user_id = $_SESSION["user_id"];
     mysqli_close($connect);
 
     ?>
-
-    <!-- TODO: this will probably need to change with user sessions -->
     <form>
         <p>
             <input type="submit" formaction="./search_recipe.html" value="Search Again!">
-            <input type="submit" formaction="./index.php" value="Return Home">
+            <input type="submit" formaction="./dashboard.php" value="Return to Dashbaord">
         </p>
     </form>
 
