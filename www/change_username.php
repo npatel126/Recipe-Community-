@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $updateStmt->bind_param("ss", $newUsername, $_SESSION["username"]);
                 if ($updateStmt->execute()) {
                     $_SESSION["username"] = $newUsername; // Update session with new username
+                    $success = "Username changed successfully.";
                 } else {
                     $error = "Error updating username: " . $connect->error;
                 }
@@ -82,6 +83,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main>
         <?php if (isset($error)) : ?>
             <p class="error"><?php echo $error; ?></p>
+        <?php endif; ?>
+        <?php if (isset($success)) : ?>
+            <p class="success"><?php echo $success; ?></p>
         <?php endif; ?>
         <form method="post">
             <label for="current_password">Current Password:</label>
