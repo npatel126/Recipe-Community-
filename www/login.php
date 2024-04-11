@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          $_SESSION['username'] = $username;
          $_SESSION['user_id'] = $user_id;
 
-        header("Location: index.php");
+        header("Location: dashboard.php");
     } else {
         // Failed login, display an error message
         echo "Invalid username or password. Please try again.";
