@@ -96,8 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="confirm_username" name="confirm_username" required>
             <button type="submit">Change Username</button>
         </form>
-        <form action="dashboard.php">
-            <button type="submit">Back to Dashboard</button>
+        <form action="user_settings.php">
+            <button type="submit">Back to Settings</button>
         </form>
     </main>
 </body>
