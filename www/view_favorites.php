@@ -44,13 +44,11 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $category = "";
 
     // Search DB for the user's favorite recipe(s) 
-    $query = "SELECT title, description, category FROM recipes JOIN favorites ON favorites.recipe_id = recipes.recipe_id JOIN users ON favorites.owner_id = users.user_id; ";
+    $query = "SELECT recipes.recipe_id, title, description, category FROM recipes JOIN favorites ON favorites.recipe_id = recipes.recipe_id JOIN users ON favorites.owner_id = users.user_id WHERE users.user_id = ?; ";
     $stmt = mysqli_prepare($connect, $query);
-
-    if ($stmt = $connect->prepare($query)) {
-        $stmt->execute();
-        $stmt->bind_result($title, $description, $category);
-    }
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    $stmt->execute();
+    $stmt->bind_result($recipe_id, $title, $description, $category);
 
     if ($stmt->fetch()) {
 
@@ -60,7 +58,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         print("<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
 
         do {
-            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$title\">View this Recipe!</a></td></tr>");
+            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
         } while ($stmt->fetch());
 
         print("</table>");
@@ -78,7 +76,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <!-- TODO: this will probably need to change with user sessions -->
     <form>
         <p>
-            <input type="submit" formaction="./index.php" value="Return Home">
+            <input type="submit" formaction="./dashboard.php" value="Return Home">
         </p>
     </form>
 
