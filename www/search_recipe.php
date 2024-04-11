@@ -36,13 +36,13 @@
         $category = "";
 
         // Search DB for recipe(s) matching description
-        $query = "SELECT title, description, category FROM recipes WHERE $type LIKE '%$search%' OR $type LIKE '%$search' OR $type LIKE '$search%'; ";
+        $query = "SELECT recipe_id, title, description, category FROM recipes WHERE $type LIKE '%$search%' OR $type LIKE '%$search' OR $type LIKE '$search%'; ";
         $stmt = mysqli_prepare($connect, $query);
     }
 
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($title, $description, $category);
+        $stmt->bind_result($recipe_id, $title, $description, $category);
     }
 
     if ($stmt->fetch()) {
@@ -53,7 +53,7 @@
         print("<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
 
         do {
-            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$title\">View this Recipe!</a></td></tr>");
+            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
         } while ($stmt->fetch());
 
         print("</table>");
