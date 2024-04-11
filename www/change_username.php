@@ -11,13 +11,15 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if current password, new username, and confirm password are provided
-    if (isset($_POST["current_password"], $_POST["new_username"], $_POST["confirm_password"]) && 
-        !empty($_POST["current_password"]) && !empty($_POST["new_username"]) && !empty($_POST["confirm_password"])) {
+    if (
+        isset($_POST["current_password"], $_POST["new_username"], $_POST["confirm_username"]) &&
+        !empty($_POST["current_password"]) && !empty($_POST["new_username"]) && !empty($_POST["confirm_username"])
+    ) {
 
         // Sanitize input
         $currentPassword = htmlspecialchars($_POST["current_password"]);
         $newUsername = htmlspecialchars($_POST["new_username"]);
-        $confirmPassword = htmlspecialchars($_POST["confirm_password"]);
+        $confirmUsername = htmlspecialchars($_POST["confirm_username"]);
 
         // Database connection details
         $server = "db";
@@ -39,15 +41,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if (password_verify($currentPassword, $hashedPassword)) {
-            // Update the username in the database
-            $updateStmt = $connect->prepare("UPDATE users SET username = ? WHERE username = ?");
-            $updateStmt->bind_param("ss", $newUsername, $_SESSION["username"]);
-            if ($updateStmt->execute()) {
-                $_SESSION["username"] = $newUsername; // Update session with new username
+            // Verify new username matches itself
+            if ($newUsername == $confirmUsername) {
+                // Update the username in the database
+                $updateStmt = $connect->prepare("UPDATE users SET username = ? WHERE username = ?");
+                $updateStmt->bind_param("ss", $newUsername, $_SESSION["username"]);
+                if ($updateStmt->execute()) {
+                    $_SESSION["username"] = $newUsername; // Update session with new username
+                } else {
+                    $error = "Error updating username: " . $connect->error;
+                }
+                $updateStmt->close();
             } else {
-                $error = "Error updating username: " . $connect->error;
+                $error = "New usernames do not match.";
             }
-            $updateStmt->close();
         } else {
             $error = "Incorrect current password.";
         }
@@ -58,17 +65,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $error = "Please fill in all fields.";
     }
-} 
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Username</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <main>
         <?php if (isset($error)) : ?>
@@ -79,8 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" id="current_password" name="current_password" required>
             <label for="new_username">New Username:</label>
             <input type="text" id="new_username" name="new_username" required>
-            <label for="confirm_password">Confirm New Username:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            <label for="confirm_username">Confirm New Username:</label>
+            <input type="text" id="confirm_username" name="confirm_username" required>
             <button type="submit">Change Username</button>
         </form>
         <form action="dashboard.php">
@@ -88,4 +97,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </main>
 </body>
+
 </html>
