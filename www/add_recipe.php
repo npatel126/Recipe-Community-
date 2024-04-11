@@ -1,4 +1,61 @@
 <?php
+    session_start();
+    if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+        echo "Welcome, " . $_SESSION["username"];
+    } else {
+        header("Location: index.php");
+        exit;
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+        <h1>Add Recipe</h1>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+
+            <label for="cuisine">Cuisine:</label>
+            <input type="text" id="cuisine" name="cuisine" required>
+
+            <label for="ingredients">Ingredients (enter each new ingredient on a new line):</label>
+            <textarea id="ingredients" name="ingredients" rows="4" cols="50" required></textarea>
+
+            <label for="instructions">Instructions (enter each new instruction on a new line):</label>
+            <textarea id="instructions" name="instructions" rows="6" cols="50" required></textarea>
+
+            <label for="prep_time">Prep Time (minutes):</label>
+            <input type="number" id="prep_time" name="prep_time" min="0" required>
+
+            <label for="cook_time">Cook Time (minutes):</label>
+            <input type="number" id="cook_time" name="cook_time" min="0" required>
+
+            <label for="total_time">Total Time (minutes):</label>
+            <input type="number" id="total_time" name="total_time" min="0" required>
+
+            <label for="servings">Servings:</label>
+            <input type="number" id="servings" name="servings" min="1" required>
+
+            <button type="submit">Submit</button>
+            <button type="submit" formaction="./dashboard.php" formnovalidate>Return</button>
+
+        </form>
+    </main>
+
+<?php
 
 // Database connection details
 $server = "db";
@@ -11,23 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Establish a database connection or exit with an error message
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
     
-    session_start();
-    
-    if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-        $username = $_SESSION["username"];
-        $query = "SELECT user_id FROM users WHERE username = ?";
-        $stmt = mysqli_prepare($connect, $query);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->bind_result($creator_id);
-        $stmt->fetch();
-        $stmt->close();
-        //TODO: edit/remove/turn into the creators name
-        echo $creator_id;
-    } else {
-       header("Location: index.php");
-       exit;
-    }
+   
     /*
  * This function replaces the html break with a pipe ("|")
  * In order to get the ingredients and instructions to display correctly we are replacing new lines with breaks and then converting those breaks into pipes so that they can be stored in the db as a single line but exploded upon retrieval for formatted display
@@ -57,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cook_time = intval($_POST["cook_time"]);
     $total_time = intval($_POST["total_time"]);
     $servings = intval($_POST["servings"]);
+    $creator_id = $_SESSION["user_id"];
 
     // Insert recipe into the database
     $query = "INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
@@ -74,3 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo '<p>Recipe added successfully!</p>';
     print("<form><p><input type=\"submit\" formaction=\"./index.php\" value=\"Return Home\"</p></form>");
 }
+
+?>
+
+</body>
+</html>
