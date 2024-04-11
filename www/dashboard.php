@@ -31,17 +31,9 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
             <h2>Profile Information</h2>
             <?php if (isset($_SESSION["username"])) : ?>
                 <p>Username: <?php echo $_SESSION['username']; ?></p>
-<<<<<<< Updated upstream
-                <button onclick="window.location.href = 'user_settings.php';">Settings</button>
-=======
                 <button onclick="window.location.href = 'user_kitchens.php';">My Kitchens</button>
                 <button onclick="window.location.href = 'user_cookbooks.php';">My Cookbooks</button>
                 <button onclick="window.location.href = 'user_settings.php';">My Settings</button>
-                <!--
-                <button onclick="window.location.href = 'change_username.php';">Change Username</button>
-                <button onclick="window.location.href = 'change_password.php';">Change Password</button>
-                -->
->>>>>>> Stashed changes
             <?php endif; ?>
         </section>
         <section>
