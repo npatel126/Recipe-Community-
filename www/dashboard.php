@@ -29,8 +29,7 @@
             <h2>Profile Information</h2>
             <?php if (isset($_SESSION["username"])): ?>
                 <p>Username: <?php echo $_SESSION['username']; ?></p>
-                <button onclick="window.location.href = 'change_username.php';">Change Username</button>
-                <button onclick="window.location.href = 'change_password.php';">Change Password</button>
+                <button onclick="window.location.href = 'user_settings.php';">Settings</button>
             <?php endif; ?>
         </section>
         <section>
