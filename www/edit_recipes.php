@@ -36,6 +36,32 @@ $prep_time = $cook_time = $total_time = $servings = 0;
 if (isset($_GET['recipe_id'])) {
     $recipe_id = $_GET['recipe_id'];
 
+    // Check if the delete button is clicked
+    if (isset($_POST['delete'])) {
+        // Prepare SQL DELETE statement
+        $delete_query = "DELETE FROM recipes WHERE recipe_id=? AND creator_id=?";
+        
+        // Prepare the delete query
+        $delete_stmt = mysqli_prepare($connect, $delete_query);
+        
+        // Bind parameters
+        mysqli_stmt_bind_param($delete_stmt, "ii", $recipe_id, $user_id);
+        
+        // Execute the delete query
+        mysqli_stmt_execute($delete_stmt);
+        
+        // Check if any rows were affected
+        if (mysqli_stmt_affected_rows($delete_stmt) > 0) {
+            // Redirect to user_recipes.php
+            header("Location: user_recipes.php");
+            exit;
+        } else {
+            echo "Failed to delete the recipe.";
+        }
+        
+        // Close the delete statement
+        mysqli_stmt_close($delete_stmt);
+    }
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve and sanitize form data
@@ -157,6 +183,7 @@ $instructions = str_replace('|', '&#10;', $instructions);
 
             <button type="submit">Submit</button>
             <button type="button" onclick="window.location.href = 'user_recipes.php';">Go Back</button>
+            <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this recipe?');">Delete Recipe</button>
         </form>
     </main>
 </body>
