@@ -41,17 +41,17 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     }
 
     $uname = $_SESSION["username"];
-    $cookbook_names = array();
+    $cookbook_ids = array();
     while ($stmt->fetch()) {
-        array_push($cookbook_names, $cookbook_name);
+        $cookbook_ids[$cookbook_id] = $cookbook_name;
     }
 
     $stmt->close();
     mysqli_close($connect);
 
     print("<h1>Cookbooks in $uname's $kitchen_name kitchen</h1>");
-    for ($i = 0; $i < sizeof($cookbook_names); $i++) {
-        print("<p>$cookbook_names[$i]</p>");
+    foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
+        print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
     }
 
     ?>
