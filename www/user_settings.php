@@ -7,6 +7,19 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     header("Location: login.html");
     exit;
 }
+
+// Toggle dark mode session variable when form is submitted
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $_SESSION['darkmode'] = !$_SESSION['darkmode']; // Toggle the darkmode variable
+}
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/settings(dark).css";
+} else {
+    $style = "css/settings.css";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,17 +27,19 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 <body>
 <header>
         <h1>Account Settings</h1>
     </header>
     <main>
-        <h1>Settings</h1>
         <div class="settings-options">
             <button onclick="window.location.href='change_password.php'">Change Password</button>
             <button onclick="window.location.href='change_username.php'">Change Username</button>
+            <form method="post">
+                <button type="submit">Toggle Darkmode</button>
+            </form>
         </div>
         <form action="dashboard.php">
             <button type="submit">Back to Dashboard</button>
