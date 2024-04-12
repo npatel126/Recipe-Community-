@@ -8,6 +8,12 @@ if (!isset($_SESSION['loggedin'])) {
     exit; // Exit the script if the user is not logged in
 }
 
+ // Toggle style session variable
+ if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+    } else {
+    $style = "css/view_list.css";
+    }
 // Database connection details
 $server = "db";
 $user = "admin";
@@ -73,8 +79,19 @@ if (mysqli_stmt_fetch($stmt_recipes)) {
 mysqli_stmt_close($stmt_recipes);
 mysqli_close($connect);
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Links for actions -->
-<p>
-    <a href="./dashboard.php">Return Home</a>
-</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
+</head>
+
+<body>
+<form action="./dashboard.php">
+    <input type="submit" value="Return">
+</form>
+</body>
+
+</html>
