@@ -8,6 +8,13 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     exit;
 }
 
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/login_register(dark).css";
+    } else {
+    $style = "css/login_register.css";
+    }
+
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if current password, new username, and confirm password are provided
@@ -76,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Username</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
