@@ -7,7 +7,15 @@ if (!isset($_SESSION['loggedin'])) {
     header("Location: index.php");
     exit; // Exit the script if the user is not logged in
 }
+
 $user_id = $_SESSION["user_id"];
+
+ // Toggle style session variable
+ if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+    } else {
+    $style = "css/view_list.css";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +25,7 @@ $user_id = $_SESSION["user_id"];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipe Search Results</title>
-    <!--
-    <link href="style.css" rel="stylesheet">
-    -->
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
@@ -84,19 +90,19 @@ $user_id = $_SESSION["user_id"];
         $formatted_cook = format_time($cook_time);
         $formatted_total = format_time($total_time);
         print("<h1>$title</h1>");
-        print("<h1>Creator: $creator_username</h1>");
-        print("<h2>Description: $description</h2>");
-        print("<h3>Category: $category</h3>");
-        print("<h3>Cuisine: $cuisine</h3>");
+        print("<h2>Creator: $creator_username </h2>");
+        print("<h3>Description: $description </h3>");
+        print("<h3>Category: $category </h3>");
+        print("<h3>Cuisine: $cuisine </h3>");
         print("<h3>Prep time: $formatted_prep </h3>");
         print("<h3>Cook time: $formatted_cook </h3>");
         print("<h3>Total time: $formatted_total </h3>");
         print("<h3>Servings: $servings</h3>");
-        print("<h2>Ingredients:</h2>");
+        print("<h4>Ingredients:</h4>");
         for ($i = 0; $i < sizeof($ingredients_list); $i++) {
             print("<p><input type=\"checkbox\"/> $ingredients_list[$i]</p>");
         }
-        print("<h2>Instructions:</h2>");
+        print("<h4>Instructions:</h4>");
         // TODO: consider checking if the first position in each string is a number and if not display one??
         for ($i = 0; $i < sizeof($instructions_list); $i++) {
             print("<p>$instructions_list[$i]</p>");
@@ -171,8 +177,8 @@ $user_id = $_SESSION["user_id"];
     ?>
     <form>
         <p>
-            <input type="submit" formaction="./search_recipe.html" value="Search Again!">
-            <input type="submit" formaction="./dashboard.php" value="Return to Dashbaord">
+            <input type="submit" formaction="./recipe_search.php" value="Search Again!">
+            <input type="submit" formaction="./dashboard.php" value="Return to Dashboard">
         </p>
     </form>
 
