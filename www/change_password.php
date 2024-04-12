@@ -7,6 +7,12 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     header("Location: login.html");
     exit;
 }
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/login_register(dark).css";
+    } else {
+    $style = "css/login_register.css";
+    }
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -75,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 <body>
     <main>
