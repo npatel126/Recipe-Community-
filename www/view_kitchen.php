@@ -26,7 +26,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $db = "rc";
 
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
-    
+
     // Retrieve the user ID from the session
     $kitchen_id = $_GET['link'];
     $kitchen_name = '';
@@ -50,14 +50,20 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     mysqli_close($connect);
 
     print("<h1>Cookbooks in $uname's $kitchen_name kitchen</h1>");
-    foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-        print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
-    }
-
     ?>
 
+    <main>
+
+        <?php
+        foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
+            print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
+        }
+        ?>
+
+
     </main>
-    <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
+    <button onclick="window.location.href = 'user_kitchens.php';">Return to Kitchens</button>
+    <button onclick="window.location.href = 'dashboard.php';">Return to Dashboard</button>
 </body>
 
 </html>
