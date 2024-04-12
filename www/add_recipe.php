@@ -1,10 +1,17 @@
 <?php
     session_start();
     if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-        echo "Welcome, " . $_SESSION["username"];
+       // echo "Welcome, " . $_SESSION["username"];
     } else {
         header("Location: index.php");
         exit;
+    }
+
+    // Toggle style session variable
+    if ($_SESSION['darkmode']) {
+    $style = "css/login_register(dark).css";
+    } else {
+    $style = "css/login_register.css";
     }
 ?>
 <!DOCTYPE html>
@@ -13,7 +20,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Recipe</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 <body>
     <main>
@@ -114,7 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Display success message
     echo '<p>Recipe added successfully!</p>';
-    print("<form><p><input type=\"submit\" formaction=\"./index.php\" value=\"Return Home\"</p></form>");
 }
 
 ?>
