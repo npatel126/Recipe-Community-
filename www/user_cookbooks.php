@@ -54,15 +54,23 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     ?>
 
     <main>
-        <h1>Cookbooks</h1>
+        <section>
+            <h1>Cookbooks</h1>
 
-        <?php
-        // TODO: maybe display what kitchen the cookbook belongs to
-        foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-            print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
-        }
-        ?>
+            <?php
+            // TODO: maybe display what kitchen the cookbook belongs to
+            foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
+                print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
+            }
+            ?>
+        </section>
 
+        <section>
+            <h1>Cookbook actions</h1>
+            <button onclick="window.location.href = 'add_cookbook.php';">Add a cookbook</button>
+            <button onclick="window.location.href = 'edit_cookbook.php';">Edit a cookbook</button>
+            <button onclick="window.location.href = 'delete_cookbook.php';">Delete a cookbook</button>
+        </section>
     </main>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
 </body>

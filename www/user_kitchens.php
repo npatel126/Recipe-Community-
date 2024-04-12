@@ -24,6 +24,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <main>
         <h1>Kitchens</h1>
 
+        <section>
         <?php
         // Database connection details
         $server = "db";
@@ -53,9 +54,15 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
         $stmt->close();
         mysqli_close($connect);
-
-
         ?>
+        </section>
+
+        <section>
+        <h1>Kitchen Actions</h1>
+        <button onclick="window.location.href = 'add_kitchen.php';">Add a kitchen</button>
+        <button onclick="window.location.href = 'edit_kitchen.php';">Edit a kitchen</button>
+        <button onclick="window.location.href = 'delete_kitchen.php';">Delete a kitchen</button>
+        </section>
 
     </main>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
