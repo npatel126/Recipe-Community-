@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          $_SESSION['loggedin'] = true;
          $_SESSION['username'] = $username;
          $_SESSION['user_id'] = $user_id;
-
+         $_SESSION['darkmode'] = false;
         header("Location: dashboard.php");
     } else {
         // Failed login, display an error message
