@@ -1,7 +1,7 @@
 <?php
     session_start();
     if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-        echo "Welcome, " . $_SESSION["username"];
+        //echo "Welcome, " . $_SESSION["username"];
     } else {
         echo "Not logged in.";
     }
@@ -14,7 +14,7 @@
     <title>Recipe Community</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
