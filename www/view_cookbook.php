@@ -50,7 +50,6 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $stmt->close();
     mysqli_close($connect);
 
-    print_r($recipe_ids);
     print("<h1>Recipes in $uname's $cookbook_name cookbook</h1>");
     foreach ($recipe_ids as $recipe_id => $recipe_name) {
         print("<p>$recipe_name <a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></p>");
