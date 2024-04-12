@@ -28,12 +28,10 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
     
     // Retrieve the user ID from the session
-    $user_id = $_SESSION['user_id'];
     $kitchen_id = $_GET['link'];
     $kitchen_name = '';
     $cookbook_id = null;
     $cookbook_name = '';
-    $cookbook_names = array();
     $query = "SELECT cookbooks.cookbook_id, cookbooks.name, kitchens.name FROM cookbooks JOIN kitchens ON kitchens.kitchen_id  = $kitchen_id WHERE cookbooks.kitchen_id = $kitchen_id ; ";
 
     $stmt = mysqli_prepare($connect, $query);
@@ -43,6 +41,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     }
 
     $uname = $_SESSION["username"];
+    $cookbook_names = array();
     while ($stmt->fetch()) {
         array_push($cookbook_names, $cookbook_name);
     }
