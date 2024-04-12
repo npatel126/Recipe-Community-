@@ -1,0 +1,70 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+}
+
+/* Header styles */
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Main styles */
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #000000;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h1, h2 {
+    color: #FFF;
+    margin-bottom: 10px;
+}
+
+/* Button styles */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* List styles */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* List item styles */
+li {
+    margin-bottom: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    main {
+        padding: 10px;
+    }
+}

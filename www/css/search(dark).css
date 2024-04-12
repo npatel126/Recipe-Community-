@@ -1,0 +1,73 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff; /* Text color set to white */
+    padding: 20px;
+}
+
+/* Heading styles */
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+form {
+    background-color: #000;
+    color: #fff; /* Text color set to white */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #fff; /* Border color set to white */
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #000; /* Background color set to black */
+    color: #fff; /* Text color set to white */
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Button container styles */
+p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    form {
+        padding: 10px;
+    }
+}

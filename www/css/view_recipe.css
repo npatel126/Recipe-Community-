@@ -1,0 +1,71 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+/* Heading styles */
+h1 {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+h3 {
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+h4 {
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+/* Ingredient list styles */
+p {
+    margin-bottom: 5px;
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Form styles */
+form {
+    margin-top: 20px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+}
