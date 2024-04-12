@@ -112,3 +112,11 @@ VALUES (
 INSERT INTO favorites (owner_id, recipe_id) VALUES (2, 1);
 INSERT INTO favorites (owner_id, recipe_id) VALUES (2, 2);
 
+-- Kitchens testing
+INSERT INTO kitchens (kitchen_id, owner_id, name) VALUES (1, 2, "Personal");
+INSERT INTO kitchens (kitchen_id, owner_id, name) VALUES (2, 2, "For blog");
+
+-- Cookbooks testing
+INSERT INTO cookbooks (cookbook_id, kitchen_id, name) VALUES (1, 1, "Breakfast");
+INSERT INTO cookbooks (cookbook_id, kitchen_id, name) VALUES (2, 1, "Lunch");
+INSERT INTO cookbooks (cookbook_id, kitchen_id, name) VALUES (3, 1, "Dinner");
