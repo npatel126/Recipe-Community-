@@ -21,6 +21,43 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <header>
         <h1>Welcome to Your Kitchens, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?>!</h1>
     </header>
+    <main>
+        <h1>Kitchens</h1>
+
+        <?php
+        // Database connection details
+        $server = "db";
+        $user = "admin";
+        $pw = "pwd";
+        $db = "rc";
+
+        $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
+
+        // Retrieve the user ID from the session
+        $user_id = $_SESSION['user_id'];
+        $kitchen_id = null;
+        $kitchen_name = '';
+        $query = "SELECT kitchen_id, name FROM kitchens WHERE owner_id = $user_id ; ";
+
+        $stmt = mysqli_prepare($connect, $query);
+        if ($stmt = $connect->prepare($query)) {
+            $stmt->execute();
+            $stmt->bind_result($kitchen_id, $kitchen_name);
+        }
+
+        $uname = $_SESSION["username"];
+
+        while ($stmt->fetch()) {
+            print("<p>$uname's $kitchen_name kitchen</p><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a>");
+        }
+
+        $stmt->close();
+        mysqli_close($connect);
+
+
+        ?>
+
+    </main>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
 </body>
 
