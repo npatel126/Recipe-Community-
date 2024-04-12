@@ -10,8 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pw = "pwd";
     $db = "rc";
 
-    // Open connection with db
-    $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
+    // This is to gracefully allow the database to finish its initialization
+    // it is rather crude and can almost certainly be done better but it will work for now
+    try {
+        // Open connection with db
+        $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
+    } catch (\Throwable $th) {
+        print("<h2>Please wait while the server initalizes</h2>");
+        print("<button onclick=\"window.location.href = 'login.html';\">Return to login page</button>");
+        exit;
+    }
 
     // Prepare and execute the query
     $query = "SELECT user_id, username, password FROM users WHERE username = ?";
