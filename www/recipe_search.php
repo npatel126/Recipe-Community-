@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+       // echo "Welcome, " . $_SESSION["username"];
+    } else {
+        header("Location: index.php");
+        exit;
+    }
+
+    // Toggle style session variable
+    if ($_SESSION['darkmode']) {
+    $style = "css/search(dark).css";
+    } else {
+    $style = "css/search.css";
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,9 +21,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipe Search</title>
-    <!--
-        <link href="css/style.css" rel="stylesheet">
-        -->
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
@@ -34,7 +48,7 @@
         <p>
             <input type="submit" value="Search!">
             <input type="submit" formaction="./view_all.php" value="View all Recipes!" formnovalidate>
-            <input type="submit" formaction="./index.php" value="Cancel" formnovalidate>
+            <input type="submit" formaction="./dashboard.php" value="Cancel" formnovalidate>
         </p>
     </form>
 
