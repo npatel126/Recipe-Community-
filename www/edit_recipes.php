@@ -7,7 +7,12 @@ if (!isset($_SESSION['loggedin'])) {
     header("Location: index.php");
     exit; // Exit the script if the user is not logged in
 }
-
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/login_register(dark).css";
+    } else {
+    $style = "css/login_register.css";
+    }
 // Database connection details
 $server = "db";
 $user = "admin";
@@ -144,7 +149,7 @@ $instructions = str_replace('|', '&#10;', $instructions);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Recipe</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
