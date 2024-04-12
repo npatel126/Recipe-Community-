@@ -1,11 +1,18 @@
 <?php
 session_start();
 if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-    echo "Welcome, " . $_SESSION["username"];
+   // echo "Welcome, " . $_SESSION["username"];
 } else {
     header("Location: index.php");
     exit;
 }
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+    } else {
+    $style = "css/view_list.css";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,14 +21,12 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favorites</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
 
     <?php
-    // TODO: DO WE NEED SESSION CONFIRMATION HERE???
-
     // Database connection details
     $server = "db";
     $user = "admin";
@@ -76,7 +81,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <!-- TODO: this will probably need to change with user sessions -->
     <form>
         <p>
-            <input type="submit" formaction="./dashboard.php" value="Return Home">
+            <input type="submit" formaction="./dashboard.php" value="Return">
         </p>
     </form>
 
