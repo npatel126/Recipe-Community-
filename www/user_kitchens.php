@@ -48,7 +48,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         $uname = $_SESSION["username"];
 
         while ($stmt->fetch()) {
-            print("<p>$uname's $kitchen_name kitchen </p><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a>");
+            print("<p>$kitchen_name </p><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a>");
         }
 
         $stmt->close();

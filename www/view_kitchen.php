@@ -53,6 +53,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     ?>
 
     <main>
+        <h1>Cookbooks</h1>
 
         <?php
         foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {

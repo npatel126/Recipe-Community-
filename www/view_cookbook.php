@@ -26,7 +26,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $db = "rc";
 
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
-    
+
     // Retrieve the user ID from the session
     $user_id = $_SESSION['user_id'];
     $cookbook_id = $_GET['link'];
@@ -49,13 +49,17 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
     $stmt->close();
     mysqli_close($connect);
-
     print("<h1>Recipes in $uname's $cookbook_name cookbook</h1>");
-    foreach ($recipe_ids as $recipe_id => $recipe_name) {
-        print("<p>$recipe_name <a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></p>");
-    }
-
     ?>
+
+    <main>
+        <h1>Recipes</h1>
+
+        <?php
+        foreach ($recipe_ids as $recipe_id => $recipe_name) {
+            print("<p>$recipe_name <a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></p>");
+        }
+        ?>
 
     </main>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
