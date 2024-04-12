@@ -1,11 +1,19 @@
 <?php
 session_start();
 if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-    echo "Welcome, " . $_SESSION["username"];
+    //echo "Welcome, " . $_SESSION["username"];
 } else {
     header("Location: index.php");
     exit;
 }
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/dashboard(dark).css";
+} else {
+    $style = "css/dashboard.css";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +22,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
@@ -40,10 +48,10 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
             <h2>Actions</h2>
             <ul>
                 <?php if (isset($_SESSION["username"])) : ?>
-                    <li><button onclick="window.location.href = 'view_favorites.php';">View Your Favorite Recipes</button></li>
-                    <li><button onclick="window.location.href = 'search_recipe.html';">Search Recipes</button></li>
+                    <li><button onclick="window.location.href = 'recipe_search.php';">Search Recipes</button></li>
                     <li><button onclick="window.location.href = 'add_recipe.php';">Add Recipe</button></li>
                     <li><button onclick="window.location.href = 'user_recipes.php';">View Your Recipes</button></li>
+                    <li><button onclick="window.location.href = 'view_favorites.php';">View Your Favorite Recipes</button></li>
                 <?php endif; ?>
             </ul>
         </section>
