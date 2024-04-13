@@ -112,6 +112,10 @@ VALUES (
     30, 10, 40, 30, 2, 3
 );
 
+-- Test recipe
+INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+Values('Test', "Test recipe", "Testing", "QA", "1 Test data|2 Test code|3 Test users", "1 Test prep|2 Test work|3 Test consume", 0, 0, 0, 0, 1);
+
 -- Favorites testing
 INSERT INTO favorites (owner_id, recipe_id) VALUES (2, 1);
 INSERT INTO favorites (owner_id, recipe_id) VALUES (2, 2);
