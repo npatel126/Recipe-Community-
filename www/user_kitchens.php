@@ -25,43 +25,41 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         <h1>Kitchens</h1>
 
         <section>
-        <?php
-        // Database connection details
-        $server = "db";
-        $user = "admin";
-        $pw = "pwd";
-        $db = "rc";
+            <?php
+            // Database connection details
+            $server = "db";
+            $user = "admin";
+            $pw = "pwd";
+            $db = "rc";
 
-        $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
+            $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
-        // Retrieve the user ID from the session
-        $user_id = $_SESSION['user_id'];
-        $kitchen_id = null;
-        $kitchen_name = '';
-        $query = "SELECT kitchen_id, name FROM kitchens WHERE owner_id = $user_id ; ";
+            // Retrieve the user ID from the session
+            $user_id = $_SESSION['user_id'];
+            $kitchen_id = null;
+            $kitchen_name = '';
+            $query = "SELECT kitchen_id, name FROM kitchens WHERE owner_id = $user_id ; ";
 
-        $stmt = mysqli_prepare($connect, $query);
-        if ($stmt = $connect->prepare($query)) {
-            $stmt->execute();
-            $stmt->bind_result($kitchen_id, $kitchen_name);
-        }
+            $stmt = mysqli_prepare($connect, $query);
+            if ($stmt = $connect->prepare($query)) {
+                $stmt->execute();
+                $stmt->bind_result($kitchen_id, $kitchen_name);
+            }
 
-        $uname = $_SESSION["username"];
+            $uname = $_SESSION["username"];
 
-        while ($stmt->fetch()) {
-            print("<p>$kitchen_name </p><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a>");
-        }
+            while ($stmt->fetch()) {
+                print("<p>$kitchen_name </p><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a>");
+            }
 
-        $stmt->close();
-        mysqli_close($connect);
-        ?>
+            $stmt->close();
+            mysqli_close($connect);
+            ?>
         </section>
 
         <section>
-        <h1>Kitchen Actions</h1>
-        <button onclick="window.location.href = 'add_kitchen.php'; ">Add a kitchen</button>
-        <button onclick="window.location.href = 'edit_kitchen.php?link=$kitchen_id';">Edit a kitchen</button>
-        <button onclick="window.location.href = 'delete_kitchen.php?link=$kitchen_id';">Delete a kitchen</button>
+            <h1>Kitchen Actions</h1>
+            <button onclick="window.location.href = 'add_kitchen.php'; ">Add a kitchen</button>
         </section>
 
     </main>
