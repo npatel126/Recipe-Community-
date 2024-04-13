@@ -6,6 +6,13 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     header("Location: index.php");
     exit;
 }
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+} else {
+    $style = "css/view_list.css";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +21,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookbook view</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>

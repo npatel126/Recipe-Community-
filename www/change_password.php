@@ -7,18 +7,21 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
     header("Location: login.html");
     exit;
 }
+
 // Toggle style session variable
 if ($_SESSION['darkmode']) {
     $style = "css/login_register(dark).css";
-    } else {
+} else {
     $style = "css/login_register.css";
-    }
+}
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if current password, new password, and confirm password are provided
-    if (isset($_POST["current_password"], $_POST["new_password"], $_POST["confirm_password"]) && 
-        !empty($_POST["current_password"]) && !empty($_POST["new_password"]) && !empty($_POST["confirm_password"])) {
+    if (
+        isset($_POST["current_password"], $_POST["new_password"], $_POST["confirm_password"]) &&
+        !empty($_POST["current_password"]) && !empty($_POST["new_password"]) && !empty($_POST["confirm_password"])
+    ) {
 
         // Sanitize input
         $currentPassword = htmlspecialchars($_POST["current_password"]);
@@ -45,22 +48,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if (password_verify($currentPassword, $hashedPassword)) {
-            // Verify if new password matches confirm password
-            if ($newPassword === $confirmPassword) {
-                // Hash the new password
-                $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            // Check if new password is different from current password
+            if ($newPassword !== $currentPassword) {
+                // Verify if new password matches confirm password
+                if ($newPassword === $confirmPassword) {
+                    // Hash the new password
+                    $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-                // Update the password in the database
-                $updateStmt = $connect->prepare("UPDATE users SET password = ? WHERE username = ?");
-                $updateStmt->bind_param("ss", $hashedNewPassword, $_SESSION["username"]);
-                if ($updateStmt->execute()) {
-                    $success = "Password updated successfully.";
+                    // Update the password in the database
+                    $updateStmt = $connect->prepare("UPDATE users SET password = ? WHERE username = ?");
+                    $updateStmt->bind_param("ss", $hashedNewPassword, $_SESSION["username"]);
+                    if ($updateStmt->execute()) {
+                        $success = "Password updated successfully.";
+                    } else {
+                        $error = "Error updating password: " . $connect->error;
+                    }
+                    $updateStmt->close();
                 } else {
-                    $error = "Error updating password: " . $connect->error;
+                    $error = "New password and confirm password do not match.";
                 }
-                $updateStmt->close();
             } else {
-                $error = "New password and confirm password do not match.";
+                $error = "New password cannot be the same as the current password.";
             }
         } else {
             $error = "Incorrect current password.";
@@ -72,24 +80,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $error = "Please fill in all fields.";
     }
-} 
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password</title>
     <link rel="stylesheet" href="<?php echo $style; ?>">
+    <style>
+        .error-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .error {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffcccc;
+            color: #ff0000;
+            border-radius: 5px;
+        }
+
+        .success {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ccffcc;
+            color: #008000;
+            border-radius: 5px;
+        }
+    </style>
 </head>
+
 <body>
     <main>
-        <?php if (isset($error)): ?>
-            <div class="error"><?php echo $error; ?></div>
+        <?php if (isset($error)) : ?>
+            <div class="error-container">
+                <p class="error"><?php echo $error; ?></p>
+            </div>
         <?php endif; ?>
-        <?php if (isset($success)): ?>
-            <div class="success"><?php echo $success; ?></div>
+        <?php if (isset($success)) : ?>
+            <div class="error-container">
+                <p class="success"><?php echo $success; ?></p>
+            </div>
         <?php endif; ?>
         <form method="post">
             <label for="current_password">Current Password:</label>
@@ -105,4 +141,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </main>
 </body>
+
 </html>

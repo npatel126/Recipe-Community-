@@ -6,6 +6,13 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     header("Location: index.php");
     exit;
 }
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+} else {
+    $style = "css/view_list.css";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +21,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kitchens view</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
@@ -90,8 +97,9 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
             <?php print("<button onclick=\"window.location.href = 'edit_kitchen.php?link=$kitchen_id' \">Edit this kitchen</button>"); ?>
         </section>
     </main>
-    <button onclick="window.location.href = 'user_kitchens.php';">Return to Kitchens</button>
-    <button onclick="window.location.href = 'dashboard.php';">Return to Dashboard</button>
+    <form>
+        <input type="submit" formaction="./user_kitchens.php" value="Return to Kitchens">
+    </form>
 </body>
 
 </html>

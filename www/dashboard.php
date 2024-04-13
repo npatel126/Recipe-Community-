@@ -14,6 +14,23 @@ if ($_SESSION['darkmode']) {
     $style = "css/dashboard.css";
 }
 
+// Database connection details
+$server = "db";
+$user = "admin";
+$pw = "pwd";
+$db = "rc";
+$connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
+// Retrieve the user's name from the database
+$user_id = $_SESSION['user_id'];
+$query = "SELECT name FROM users WHERE user_id = $user_id";
+$result = mysqli_query($connect, $query);
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $user_name = $row['name'];
+} else {
+    $user_name = "Guest";
+}
+mysqli_close($connect);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +48,7 @@ if ($_SESSION['darkmode']) {
         <?php if (!isset($_SESSION["username"])) : ?>
             <button onclick="window.location.href = 'login.html';">Login</button>
         <?php else : ?>
-            <p>Username: <?php echo $_SESSION['username']; ?></p>
+            <p>Name: <?php echo $user_name; ?></p>
             <button onclick="window.location.href = 'logout.php';">Logout</button>
         <?php endif; ?>
     </header>

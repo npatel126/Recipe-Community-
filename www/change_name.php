@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    // Redirect to login page if not logged in
-    header("Location: login.html");
+if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+    //echo "Welcome, " . $_SESSION["username"];
+} else {
+    header("Location: index.php");
     exit;
 }
 
@@ -17,16 +17,16 @@ if ($_SESSION['darkmode']) {
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if current password, new username, and confirm password are provided
+    // Check if current password, new name, and confirm name are provided
     if (
-        isset($_POST["current_password"], $_POST["new_username"], $_POST["confirm_username"]) &&
-        !empty($_POST["current_password"]) && !empty($_POST["new_username"]) && !empty($_POST["confirm_username"])
+        isset($_POST["current_password"], $_POST["new_name"], $_POST["confirm_name"]) &&
+        !empty($_POST["current_password"]) && !empty($_POST["new_name"]) && !empty($_POST["confirm_name"])
     ) {
 
         // Sanitize input
         $currentPassword = htmlspecialchars($_POST["current_password"]);
-        $newUsername = htmlspecialchars($_POST["new_username"]);
-        $confirmUsername = htmlspecialchars($_POST["confirm_username"]);
+        $newName = htmlspecialchars($_POST["new_name"]);
+        $confirmName = htmlspecialchars($_POST["confirm_name"]);
 
         // Database connection details
         $server = "db";
@@ -48,32 +48,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if (password_verify($currentPassword, $hashedPassword)) {
-            // Verify new username matches itself
-            if ($newUsername == $confirmUsername) {
-                // Check if the new username is already in use
-                $checkStmt = $connect->prepare("SELECT username FROM users WHERE username = ?");
-                $checkStmt->bind_param("s", $newUsername);
-                $checkStmt->execute();
-                $checkStmt->store_result();
-
-                if ($checkStmt->num_rows === 0) {
-                    // Update the username in the database
-                    $updateStmt = $connect->prepare("UPDATE users SET username = ? WHERE username = ?");
-                    $updateStmt->bind_param("ss", $newUsername, $_SESSION["username"]);
-                    if ($updateStmt->execute()) {
-                        $_SESSION["username"] = $newUsername; // Update session with new username
-                        $success = "Username changed successfully.";
-                    } else {
-                        $error = "Error updating username: " . $connect->error;
-                    }
-                    $updateStmt->close();
+            // Verify new name matches itself
+            if ($newName == $confirmName) {
+                // Update the name in the database
+                $updateStmt = $connect->prepare("UPDATE users SET name = ? WHERE username = ?");
+                $updateStmt->bind_param("ss", $newName, $_SESSION["username"]);
+                if ($updateStmt->execute()) {
+                    $_SESSION["name"] = $newName; // Update session with new name
+                    $success = "Name changed successfully.";
                 } else {
-                    $error = "Username already in use.";
+                    $error = "Error updating name: " . $connect->error;
                 }
-
-                $checkStmt->close();
+                $updateStmt->close();
             } else {
-                $error = "New usernames do not match.";
+                $error = "New names do not match.";
             }
         } else {
             $error = "Incorrect current password.";
@@ -94,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Username</title>
+    <title>Change Name</title>
     <link rel="stylesheet" href="<?php echo $style; ?>">
     <style>
         .error-container {
@@ -135,11 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="post">
             <label for="current_password">Current Password:</label>
             <input type="password" id="current_password" name="current_password" required>
-            <label for="new_username">New Username:</label>
-            <input type="text" id="new_username" name="new_username" required>
-            <label for="confirm_username">Confirm New Username:</label>
-            <input type="text" id="confirm_username" name="confirm_username" required>
-            <button type="submit">Change Username</button>
+            <label for="new_name">New Name:</label>
+            <input type="text" id="new_name" name="new_name" required>
+            <label for="confirm_name">Confirm New Name:</label>
+            <input type="text" id="confirm_name" name="confirm_name" required>
+            <button type="submit">Change Name</button>
         </form>
         <form action="user_settings.php">
             <button type="submit">Back to Settings</button>
