@@ -104,6 +104,8 @@ INSERT INTO cookbooks (owner_id, name) VALUES (2, "Desert");
 
 -- Favorites creation
 INSERT INTO favorites (owner_id) VALUES (2);
+INSERT INTO favorites (owner_id) VALUES (2);
+INSERT INTO favorites (owner_id) VALUES (2);
 
 -- Kitchens testing
 INSERT INTO kitchens_cookbooks (kitchen_id, cookbook_id) VALUES (1, 2);
@@ -422,5 +424,5 @@ INSERT INTO cookbooks_recipes (cookbook_id, recipe_id) VALUES (4, 3);
 
 -- Favorites testing
 INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (1, 5);
-INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (1, 1);
-INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (1, 2);
+INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (2, 1);
+INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (3, 2);
