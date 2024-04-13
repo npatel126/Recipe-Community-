@@ -151,7 +151,7 @@ VALUES (
 
 
 -- Example recipe 4
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Grilled Lemon Herb Chicken',
     'Juicy and flavorful grilled chicken marinated in lemon and herbs.',
@@ -163,7 +163,7 @@ VALUES (
 );
 
 -- Example recipe 5
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Vegetable Stir-Fry',
     'A colorful and nutritious stir-fry featuring a variety of fresh vegetables.',
@@ -175,7 +175,7 @@ VALUES (
 );
 
 -- Example recipe 6
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Greek Salad',
     'A refreshing and vibrant salad featuring crisp vegetables, tangy feta cheese, and kalamata olives.',
@@ -187,7 +187,7 @@ VALUES (
 );
 
 -- Example recipe 7
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Homemade Pizza',
     'A classic homemade pizza with a crispy crust and your favorite toppings.',
@@ -199,7 +199,7 @@ VALUES (
 );
 
 -- Example recipe 8
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Chocolate Chip Cookies',
     'Classic homemade chocolate chip cookies that are soft and chewy on the inside, with crispy edges.',
@@ -210,7 +210,7 @@ VALUES (
     20, 10, 30, 36, 2
 );
 -- Example recipe 9
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Spaghetti Carbonara',
     'A classic Italian pasta dish made with pancetta, eggs, cheese, and black pepper.',
@@ -222,7 +222,7 @@ VALUES (
 );
 
 -- Example recipe 10
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Chicken Tikka Masala',
     'A popular Indian curry dish featuring tender chicken in a creamy tomato-based sauce.',
@@ -234,7 +234,7 @@ VALUES (
 );
 
 -- Example recipe 11
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Mushroom Risotto',
     'A creamy and comforting Italian rice dish cooked with mushrooms, onions, and Parmesan cheese.',
@@ -246,7 +246,7 @@ VALUES (
 );
 
 -- Example recipe 12
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Vegetable Lasagna',
     'A hearty vegetarian lasagna loaded with layers of noodles, marinara sauce, vegetables, and cheese.',
@@ -258,7 +258,7 @@ VALUES (
 );
 
 -- Example recipe 13
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Caprese Salad',
     'A simple and elegant Italian salad featuring fresh tomatoes, mozzarella cheese, basil, and balsamic glaze.',
@@ -270,7 +270,7 @@ VALUES (
 );
 
 -- Example recipe 14
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Beef Stroganoff',
     'A comforting Russian dish featuring tender strips of beef in a creamy mushroom sauce, served over egg noodles.',
@@ -282,7 +282,7 @@ VALUES (
 );
 
 -- Example recipe 15
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Shrimp Scampi',
     'A classic Italian-American seafood dish featuring tender shrimp cooked in a garlic butter sauce, served over pasta.',
@@ -294,7 +294,7 @@ VALUES (
 );
 
 -- Example recipe 16
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Vegetable Stir-Fry',
     'A quick and healthy Asian-inspired dish featuring a colorful medley of vegetables stir-fried in a savory sauce.',
@@ -306,7 +306,7 @@ VALUES (
 );
 
 -- Example recipe 17
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Chicken Caesar Salad',
     'A classic salad featuring crisp romaine lettuce, grilled chicken, Parmesan cheese, and Caesar dressing.',
@@ -318,7 +318,7 @@ VALUES (
 );
 
 -- Example recipe 18
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Chocolate Chip Cookies',
     'Classic homemade cookies studded with chocolate chips, perfect for satisfying your sweet tooth.',
@@ -330,7 +330,7 @@ VALUES (
 );
 
 -- Example recipe 19
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Tomato Basil Soup',
     'A comforting and flavorful soup made with ripe tomatoes, fresh basil, and a hint of cream.',
@@ -341,7 +341,7 @@ VALUES (
     15, 30, 45, 6, 4
 );
 -- Example recipe 20.
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Chicken Alfredo Pasta',
     'A classic Italian pasta dish featuring tender chicken breast slices, creamy Alfredo sauce, and fettuccine noodles.',
@@ -353,7 +353,7 @@ VALUES (
 );
 
 -- Example recipe 21.
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Vegetable Curry',
     'A flavorful and aromatic vegetarian curry made with a variety of fresh vegetables, coconut milk, and spices.',
@@ -365,7 +365,7 @@ VALUES (
 );
 
 -- Example recipe 22.
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Grilled Salmon with Lemon-Dill Sauce',
     'A light and flavorful seafood dish featuring grilled salmon fillets topped with a tangy lemon-dill sauce.',
@@ -377,7 +377,7 @@ VALUES (
 );
 
 -- Example recipe 23.
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Beef Stir-Fry with Vegetables',
     'A quick and easy Asian-inspired stir-fry dish featuring tender slices of beef, colorful vegetables, and a flavorful sauce.',
@@ -389,7 +389,7 @@ VALUES (
 );
 
 -- Example recipe 24.
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Chocolate Lava Cake',
     'A decadent dessert featuring rich chocolate cake with a gooey molten center, served warm and topped with a scoop of vanilla ice cream.',
@@ -402,7 +402,7 @@ VALUES (
 
 
 -- Example recipe 25.
-INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
 VALUES (
     'Tiramisu',
     'A classic Italian dessert featuring layers of coffee-soaked ladyfingers and creamy mascarpone cheese, dusted with cocoa powder.',
