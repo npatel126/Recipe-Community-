@@ -44,19 +44,19 @@
         $type = $_POST["type"];
 
         // init vars for query return
-        $title = "";
+        $name = "";
         $description = "";
         $category = "";
         $recipe_id = "";
 
         // Search DB for recipe(s) matching description
-        $query = "SELECT title, description, category, recipe_id FROM recipes; ";
+        $query = "SELECT name, description, category, recipe_id FROM recipes; ";
         $stmt = mysqli_prepare($connect, $query);
     }
 
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($title, $description, $category, $recipe_id);
+        $stmt->bind_result($name, $description, $category, $recipe_id);
     }
 
     if ($stmt->fetch()) {
@@ -64,10 +64,10 @@
         print("<h1> All recipes</h1>");
 
         print("<table border=1>");
-        print("<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
+        print("<tr> <th>Name</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
 
         do {
-            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
+            print("<tr><td>$name</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
         } while ($stmt->fetch());
 
         print("</table>");

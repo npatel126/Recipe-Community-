@@ -44,7 +44,7 @@ if ($_SESSION['darkmode']) {
     $owner_id = $_SESSION["user_id"];
 
     // init vars for query return
-    $title = "";
+    $recipe_name = "";
     $description = "";
     $category = "";
 
@@ -54,17 +54,17 @@ if ($_SESSION['darkmode']) {
     $stmt = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($stmt, "i", $owner_id);
     $stmt->execute();
-    $stmt->bind_result($recipe_id, $title, $description, $category);
+    $stmt->bind_result($recipe_id, $recipe_name, $description, $category);
 
     if ($stmt->fetch()) {
 
         print("<h1> My favortie recipes</h1>");
 
         print("<table border=1>");
-        print("<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
+        print("<tr> <th>Name</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
 
         do {
-            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
+            print("<tr><td>$recipe_name</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
         } while ($stmt->fetch());
 
         print("</table>");

@@ -46,18 +46,18 @@ if ($_SESSION['darkmode']) {
         $type = $_POST["type"];
 
         // init vars for query return
-        $title = "";
+        $name = "";
         $description = "";
         $category = "";
 
         // Search DB for recipe(s) matching description
-        $query = "SELECT recipe_id, title, description, category FROM recipes WHERE $type LIKE '%$search%' OR $type LIKE '%$search' OR $type LIKE '$search%'; ";
+        $query = "SELECT recipe_id, name, description, category FROM recipes WHERE $type LIKE '%$search%' OR $type LIKE '%$search' OR $type LIKE '$search%'; ";
         $stmt = mysqli_prepare($connect, $query);
     }
 
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($recipe_id, $title, $description, $category);
+        $stmt->bind_result($recipe_id, $name, $description, $category);
     }
 
     if ($stmt->fetch()) {
@@ -65,10 +65,10 @@ if ($_SESSION['darkmode']) {
         print("<h1> Search Results for $search </h1>");
 
         print("<table border=1>");
-        print("<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
+        print("<tr> <th>Name</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");
 
         do {
-            print("<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
+            print("<tr><td>$name</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td></tr>");
         } while ($stmt->fetch());
 
         print("</table>");

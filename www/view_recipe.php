@@ -42,7 +42,7 @@ $user_id = $_SESSION["user_id"];
     $search = $_GET['link'];
     // init vars for query return
     $recipe_id = "";
-    $title = "";
+    $name = "";
     $description = "";
     $category = "";
     $cuisine = "";
@@ -56,7 +56,7 @@ $user_id = $_SESSION["user_id"];
     $creator_username = "";
 
     // Search DB for recipe(s) matching description
-    $query = "SELECT r.recipe_id, r.title, r.description, r.category, r.cuisine, r.ingredients, r.instructions, r.prep_time, r.cook_time, r.total_time, r.servings, r.creator_id, u.username
+    $query = "SELECT r.recipe_id, r.name, r.description, r.category, r.cuisine, r.ingredients, r.instructions, r.prep_time, r.cook_time, r.total_time, r.servings, r.creator_id, u.username
               FROM recipes r
               INNER JOIN users u ON r.creator_id = u.user_id
               WHERE r.recipe_id = '$search'; ";
@@ -65,7 +65,7 @@ $user_id = $_SESSION["user_id"];
 
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($recipe_id, $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id, $creator_username);
+        $stmt->bind_result($recipe_id, $name, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id, $creator_username);
     }
 
     function format_time($time)
@@ -89,7 +89,7 @@ $user_id = $_SESSION["user_id"];
         $formatted_prep = format_time($prep_time);
         $formatted_cook = format_time($cook_time);
         $formatted_total = format_time($total_time);
-        print("<h1>$title</h1>");
+        print("<h1>$name</h1>");
         print("<h2>Creator: $creator_username </h2>");
         print("<h3>Description: $description </h3>");
         print("<h3>Category: $category </h3>");

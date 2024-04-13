@@ -26,8 +26,8 @@
     <main>
         <h1>Add Recipe</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" cols="50" required></textarea>
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Sanitize and validate form inputs
-    $title = htmlspecialchars($_POST["title"]);
+    $name = htmlspecialchars($_POST["name"]);
     $description = htmlspecialchars($_POST["description"]);
     $category = htmlspecialchars($_POST["category"]);
     $cuisine = htmlspecialchars($_POST["cuisine"]);
@@ -108,10 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $creator_id = $_SESSION["user_id"];
 
     // Insert recipe into the database
-    $query = "INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
+    $query = "INSERT INTO recipes (name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id)
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($stmt, "sssssssssss", $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
+    mysqli_stmt_bind_param($stmt, "sssssssssss", $name, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id);
     mysqli_stmt_execute($stmt);
     // Close the statement for recipe insertion
     mysqli_stmt_close($stmt);

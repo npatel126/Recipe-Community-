@@ -33,7 +33,7 @@
 
         <label for="type">Search type:</label>
         <select name="type">
-            <option value="title">Title</option>
+            <option value="name">Name</option>
             <option value="category">Category</option>
             <option value="cuisine">Cuisine</option>
             <option value="ingredients">Ingredient</option>

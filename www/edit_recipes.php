@@ -34,7 +34,7 @@ function br2pipe($input)
 $user_id = $_SESSION['user_id'];
 
 // Initialize variables to store recipe details
-$title = $description = $category = $cuisine = $ingredients = $instructions = "";
+$name = $description = $category = $cuisine = $ingredients = $instructions = "";
 $prep_time = $cook_time = $total_time = $servings = 0;
 
 // Check if the recipe_id parameter is set in the URL
@@ -70,7 +70,7 @@ if (isset($_GET['recipe_id'])) {
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve and sanitize form data
-        $title = mysqli_real_escape_string($connect, $_POST['title']);
+        $name = mysqli_real_escape_string($connect, $_POST['name']);
         $description = mysqli_real_escape_string($connect, $_POST['description']);
         $category = mysqli_real_escape_string($connect, $_POST['category']);
         $cuisine = mysqli_real_escape_string($connect, $_POST['cuisine']);
@@ -82,13 +82,13 @@ if (isset($_GET['recipe_id'])) {
         $servings = intval($_POST['servings']);
 
         // Prepare SQL UPDATE statement
-        $query = "UPDATE recipes SET title=?, description=?, category=?, cuisine=?, ingredients=?, instructions=?, prep_time=?, cook_time=?, total_time=?, servings=? WHERE recipe_id=? AND creator_id=?";
+        $query = "UPDATE recipes SET name=?, description=?, category=?, cuisine=?, ingredients=?, instructions=?, prep_time=?, cook_time=?, total_time=?, servings=? WHERE recipe_id=? AND creator_id=?";
 
         // Prepare the query
         $stmt = mysqli_prepare($connect, $query);
 
         // Bind parameters
-        mysqli_stmt_bind_param($stmt, "ssssssiiiiii", $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $recipe_id, $user_id);
+        mysqli_stmt_bind_param($stmt, "ssssssiiiiii", $name, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $recipe_id, $user_id);
 
         // Execute the query
         mysqli_stmt_execute($stmt);
@@ -105,7 +105,7 @@ if (isset($_GET['recipe_id'])) {
     }
 
     // Query to retrieve the recipe details based on recipe_id and creator_id
-    $query = "SELECT title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings FROM recipes WHERE recipe_id = ? AND creator_id = ?";
+    $query = "SELECT name, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings FROM recipes WHERE recipe_id = ? AND creator_id = ?";
 
     // Prepare the query
     $stmt = mysqli_prepare($connect, $query);
@@ -117,7 +117,7 @@ if (isset($_GET['recipe_id'])) {
     mysqli_stmt_execute($stmt);
 
     // Bind the result variables
-    mysqli_stmt_bind_result($stmt, $title, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings);
+    mysqli_stmt_bind_result($stmt, $name, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings);
 
     // Fetch the result
     mysqli_stmt_fetch($stmt);
@@ -156,8 +156,8 @@ $instructions = str_replace('|', '&#10;', $instructions);
     <main>
         <h1>Edit Recipe</h1>
         <form action="" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($title); ?>" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($name); ?>" required>
 
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" cols="50" required><?php echo htmlspecialchars($description); ?></textarea>

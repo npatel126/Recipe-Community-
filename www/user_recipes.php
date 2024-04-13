@@ -48,7 +48,7 @@ mysqli_stmt_fetch($stmt);
 mysqli_stmt_close($stmt);
 
 // Query to retrieve recipes belonging to the current user
-$query_recipes = "SELECT recipe_id, title, description, category FROM recipes WHERE creator_id = ?";
+$query_recipes = "SELECT recipe_id, name, description, category FROM recipes WHERE creator_id = ?";
 
 // Prepare the query for recipes
 $stmt_recipes = mysqli_prepare($connect, $query_recipes);
@@ -60,15 +60,15 @@ mysqli_stmt_bind_param($stmt_recipes, "i", $user_id);
 mysqli_stmt_execute($stmt_recipes);
 
 // Bind the result variables
-mysqli_stmt_bind_result($stmt_recipes, $recipe_id, $title, $description, $category);
+mysqli_stmt_bind_result($stmt_recipes, $recipe_id, $name, $description, $category);
 
 // Display the recipes
 if (mysqli_stmt_fetch($stmt_recipes)) {
     echo "<h1> Your Recipes</h1>";
     echo "<table border='1'>";
-    echo "<tr> <th>Title</th> <th>Description</th> <th>Category</th> <th>View recipe</th> <th>Edit</th> </tr>";
+    echo "<tr> <th>Name</th> <th>Description</th> <th>Category</th> <th>View recipe</th> <th>Edit</th> </tr>";
     do {
-        echo "<tr><td>$title</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipes.php?recipe_id=$recipe_id\">Edit</a></td></tr>";
+        echo "<tr><td>$name</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipes.php?recipe_id=$recipe_id\">Edit</a></td></tr>";
     } while (mysqli_stmt_fetch($stmt_recipes));
     echo "</table>";
 } else {
