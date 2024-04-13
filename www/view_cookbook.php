@@ -6,6 +6,13 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     header("Location: index.php");
     exit;
 }
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+} else {
+    $style = "css/view_list.css";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +21,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookbook view</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
@@ -53,16 +60,27 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     ?>
 
     <main>
-        <h1>Recipes</h1>
-
-        <?php
-        foreach ($recipe_ids as $recipe_id => $recipe_name) {
-            print("<p>$recipe_name <a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></p>");
-        }
-        ?>
-
+        <table>
+            <thead>
+                <tr>
+                    <th>Recipe Name</th>
+                    <th>View Recipe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($recipe_ids as $recipe_id => $recipe_name) : ?>
+                    <tr>
+                        <td><?php echo $recipe_name; ?></td>
+                        <td><a href="view_recipe.php?link=<?php echo $recipe_id; ?>">View this Recipe!</a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </main>
-    <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
+    <form>
+    <input type="submit" formaction="./user_cookbooks.php" value="Return to Cookbooks">
+    <input type="submit" formaction="./user_kitchens.php" value="Return to Kitchens">
+    </form>
 </body>
 
 </html>
