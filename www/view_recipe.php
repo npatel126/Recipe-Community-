@@ -121,15 +121,21 @@ $user_id = $_SESSION["user_id"];
     function check_favorite($connect, $u_id, $r_id)
     {
         $is_favorite = false;
-        $is_owner = null;
-        $query = "SELECT owner_id FROM favorites WHERE recipe_id = $r_id ;";
+        $recipe_id = null;
+        //$query = "SELECT owner_id FROM favorites WHERE recipe_id = $r_id ;";
+        //$query = "SELECT recipes.recipe_id FROM recipes JOIN favorites_recipes ON recipes.recipe_id = favorites_recipes.recipe_id JOIN favorites ON favorites.favorite_id = favorites_recipes.favorite_id WHERE recipes.recipe_id = $r_id AND favorites.owner_id = $u_id";
+        // ^^^ old ideas
+        //
+        // Ideas
+        // $query = INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES ((INSERT INTO favorites (owner_id) OUPUT Inserted.PrimaryKey VALUES (2), 10));
+        $query = "SELECT favorites.favorite_id FROM favorites JOIN favorites_recipes ON favorites.favorite_id = favorites_recipes.favorite_id JOIN recipes "
         $stmt = "";
         if ($stmt = $connect->prepare($query)) {
             $stmt->execute();
-            $stmt->bind_result($is_owner);
+            $stmt->bind_result($recipe_id);
         }
         while ($stmt->fetch()) {
-            if ($is_owner != null && $is_owner == $u_id) {
+            if ($recipe_id == $r_id) {
                 $is_favorite = true;
             }
         }
@@ -137,20 +143,38 @@ $user_id = $_SESSION["user_id"];
         return $is_favorite;
     }
 
-    // TODO: These two functions (add/remove favorite) probably need better checks for db stuff
-
     function add_favorite($connect, $u_id, $r_id)
     {
-        $query = "INSERT INTO favorites (owner_id, recipe_id) VALUES (?, ?); ";
+        //$query = "INSERT INTO favorites (owner_id, recipe_id) VALUES (?, ?); ";
+        $fav_id = '';
+        $query = "SELECT favorite_id FROM favorites WHERE owner_id = ?";
         $stmt = mysqli_prepare($connect, $query);
-        mysqli_stmt_bind_param($stmt, "ii", $u_id, $r_id);
+        mysqli_stmt_bind_param($stmt, "i", $u_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $fav_id);
+        var_dump($fav_id);
+        mysqli_stmt_reset($stmt);
+
+        $query = "INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (?,?);";
+        $stmt = mysqli_prepare($connect, $query);
+        mysqli_stmt_bind_param($stmt, "ii", $fav_id, $r_id);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
+
     function remove_favorite($connect, $u_id, $r_id)
     {
-        $query = "DELETE FROM favorites WHERE owner_id = $u_id AND recipe_id = $r_id; ";
+        $fav_id = '';
+        $query = "SELECT favorite_id FROM favorites WHERE owner_id = ?";
         $stmt = mysqli_prepare($connect, $query);
+        mysqli_stmt_bind_param($stmt, "i", $u_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $fav_id);
+        mysqli_stmt_reset($stmt);
+
+        $query = "DELETE FROM favorites_recipes WHERE favorite_id = ? AND recipe_id = ?; ";
+        $stmt = mysqli_prepare($connect, $query);
+        mysqli_stmt_bind_param($stmt, "ii", $fav_id, $r_id);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
