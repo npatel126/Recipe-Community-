@@ -42,7 +42,6 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         $stmt->bind_result($cookbook_id, $cookbook_name);
     }
 
-    $uname = $_SESSION["username"];
     $cookbook_ids = array();
     while ($stmt->fetch()) {
         $cookbook_ids[$cookbook_id] = $cookbook_name;
@@ -58,16 +57,19 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
             <?php
             // TODO: maybe display what kitchen the cookbook belongs to
+            natcasesort($cookbook_ids);
+            print("<table border=1>");
+            print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
             foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-                print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
+                print("<tr><td>$cookbook_name</td><td><a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></td><td><a href=\"edit_cookbook.php?link=$cookbook_id\">Edit this Cookbook!</a></td><tr>");
             }
             ?>
+            </table>
         </section>
 
         <section>
             <h1>Cookbook actions</h1>
             <button onclick="window.location.href = 'add_cookbook.php'; ">Add a cookbook</button>
-            <?php print("<button onclick=\"window.location.href = 'edit_cookbook.php?link=$cookbook_id';\">Edit a cookbook</button>"); ?>
         </section>
     </main>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
