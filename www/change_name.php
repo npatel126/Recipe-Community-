@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    // Redirect to login page if not logged in
-    header("Location: login.html");
+if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+    //echo "Welcome, " . $_SESSION["username"];
+} else {
+    header("Location: index.php");
     exit;
 }
 
@@ -84,15 +84,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Name</title>
     <link rel="stylesheet" href="<?php echo $style; ?>">
+    <style>
+        .error-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .error {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffcccc;
+            color: #ff0000;
+            border-radius: 5px;
+        }
+
+        .success {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ccffcc;
+            color: #008000;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
     <main>
         <?php if (isset($error)) : ?>
-            <p class="error"><?php echo $error; ?></p>
+            <div class="error-container">
+                <p class="error"><?php echo $error; ?></p>
+            </div>
         <?php endif; ?>
         <?php if (isset($success)) : ?>
-            <p class="success"><?php echo $success; ?></p>
+            <div class="error-container">
+                <p class="success"><?php echo $success; ?></p>
+            </div>
         <?php endif; ?>
         <form method="post">
             <label for="current_password">Current Password:</label>
