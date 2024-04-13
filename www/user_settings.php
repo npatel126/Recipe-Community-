@@ -2,9 +2,10 @@
 session_start();
 
 // Check if user is logged in
-if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
-    // Redirect to login page if not logged in
-    header("Location: login.html");
+if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+    //echo "Welcome, " . $_SESSION["username"];
+} else {
+    header("Location: index.php");
     exit;
 }
 
