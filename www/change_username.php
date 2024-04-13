@@ -11,9 +11,9 @@ if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
 // Toggle style session variable
 if ($_SESSION['darkmode']) {
     $style = "css/login_register(dark).css";
-    } else {
+} else {
     $style = "css/login_register.css";
-    }
+}
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,16 +50,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($currentPassword, $hashedPassword)) {
             // Verify new username matches itself
             if ($newUsername == $confirmUsername) {
-                // Update the username in the database
-                $updateStmt = $connect->prepare("UPDATE users SET username = ? WHERE username = ?");
-                $updateStmt->bind_param("ss", $newUsername, $_SESSION["username"]);
-                if ($updateStmt->execute()) {
-                    $_SESSION["username"] = $newUsername; // Update session with new username
-                    $success = "Username changed successfully.";
+                // Check if the new username is already in use
+                $checkStmt = $connect->prepare("SELECT username FROM users WHERE username = ?");
+                $checkStmt->bind_param("s", $newUsername);
+                $checkStmt->execute();
+                $checkStmt->store_result();
+
+                if ($checkStmt->num_rows === 0) {
+                    // Update the username in the database
+                    $updateStmt = $connect->prepare("UPDATE users SET username = ? WHERE username = ?");
+                    $updateStmt->bind_param("ss", $newUsername, $_SESSION["username"]);
+                    if ($updateStmt->execute()) {
+                        $_SESSION["username"] = $newUsername; // Update session with new username
+                        $success = "Username changed successfully.";
+                    } else {
+                        $error = "Error updating username: " . $connect->error;
+                    }
+                    $updateStmt->close();
                 } else {
-                    $error = "Error updating username: " . $connect->error;
+                    $error = "Username already in use.";
                 }
-                $updateStmt->close();
+
+                $checkStmt->close();
             } else {
                 $error = "New usernames do not match.";
             }
