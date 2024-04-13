@@ -1,10 +1,5 @@
 <?php
     session_start();
-    if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-        //echo "Welcome, " . $_SESSION["username"];
-    } else {
-        echo "Not logged in.";
-    }
 ?>
 <!DOCTYPE html>
 
@@ -65,7 +60,7 @@
         <h2>
             Search recipe
         </h2>
-        <form action="./search_recipe.html">
+        <form action="./recipe_search.php">
             <input type="submit" value="Click here to search recipe!">
         </form>
         <?php else: ?>
@@ -73,14 +68,14 @@
         <h2>
             Don't have an account and would like to join the Recipe Community?
         </h2>
-        <form action="./register.html">
+        <form action="./register.php">
             <input type="submit" value="Click here to create an account!">
         </form>
 
         <h2>
             Already have an account?
         </h2>
-        <form action="./login.html">
+        <form action="./login.php">
             <input type="submit" value="Click here to login to your account!">
         </form>
         <?php endif; ?>
