@@ -37,6 +37,7 @@ if ($_SESSION['darkmode']) {
         <div class="settings-options">
             <button onclick="window.location.href='change_password.php'">Change Password</button>
             <button onclick="window.location.href='change_username.php'">Change Username</button>
+            <button onclick="window.location.href='change_name.php'">Change Name</button>
             <form method="post">
                 <button type="submit">Toggle Darkmode</button>
             </form>
