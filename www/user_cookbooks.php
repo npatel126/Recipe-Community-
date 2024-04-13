@@ -56,12 +56,16 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
             <h1>Cookbooks</h1>
 
             <?php
-            // TODO: maybe display what kitchen the cookbook belongs to
-            natcasesort($cookbook_ids);
-            print("<table border=1>");
-            print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
-            foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-                print("<tr><td>$cookbook_name</td><td><a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></td><td><a href=\"edit_cookbook.php?link=$cookbook_id\">Edit this Cookbook!</a></td><tr>");
+            if (($cookbook_ids !== null) && (sizeof($cookbook_ids) > 0)) {
+                // TODO: maybe display what kitchen the cookbook belongs to
+                natcasesort($cookbook_ids);
+                print("<table border=1>");
+                print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
+                foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
+                    print("<tr><td>$cookbook_name</td><td><a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></td><td><a href=\"edit_cookbook.php?link=$cookbook_id\">Edit this Cookbook!</a></td><tr>");
+                }
+            } else {
+                print("Create a cookbook!");
             }
             ?>
             </table>
