@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize form data
     $kitchen_name = mysqli_real_escape_string($connect, $_POST['name']);
     $kc_cbs = $_POST['kc_cb'];
-    $selected_cbs = join(',', array_fill(0, count($kc_cbs), '?'));
+    $qMark_arr = join(',', array_fill(0, count($kc_cbs), '?'));
 
     // Prepare SQL UPDATE statement to update kitchen name
     $query = "UPDATE kitchens SET name=? WHERE kitchen_id=? AND owner_id=?;";
@@ -81,26 +81,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Execute the query
     mysqli_stmt_execute($stmt);
 
-    // Prepare SQL UPDATE statement to update kitchen's cookbooks (only adds right now)
-    $query = "UPDATE cookbooks SET cookbooks.kitchen_id=? WHERE cookbooks.cookbook_id IN ($selected_cbs);";
+    // Prepare SQL UPDATE statement to update kitchen's cookbooks (ADD SELECTED)
+    $query = "UPDATE cookbooks SET cookbooks.kitchen_id=? WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id IN ($qMark_arr);";
 
     // Prepare the query
     $stmt2 = mysqli_prepare($connect, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt2, str_repeat('i', count($kc_cbs) + 1), $kitchen_id, ...$kc_cbs);
+    mysqli_stmt_bind_param($stmt2, str_repeat('i', count($kc_cbs) + 2), $kitchen_id, $owner_id, ...$kc_cbs);
 
     // Execute the query
     mysqli_stmt_execute($stmt2);
 
-    // Prepare SQL UPDATE statement to update kitchen's cookbooks (only adds right now)
-    $query = "UPDATE cookbooks SET cookbooks.kitchen_id=null WHERE cookbooks.cookbook_id NOT IN ($selected_cbs);";
+    // Prepare SQL UPDATE statement to update kitchen's cookbooks (REMOVE UNSELECTED)
+    $query = "UPDATE cookbooks SET cookbooks.kitchen_id=null WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id NOT IN ($qMark_arr);";
 
     // Prepare the query
     $stmt3 = mysqli_prepare($connect, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt3, str_repeat('i', count($kc_cbs)), ...$kc_cbs);
+    mysqli_stmt_bind_param($stmt3, str_repeat('i', count($kc_cbs) + 1), $owner_id, ...$kc_cbs);
 
     // Execute the query
     mysqli_stmt_execute($stmt3);
@@ -142,7 +142,7 @@ while ($stmt->fetch()) {
 $all_cookbook_ids = array();
 $all_cookbook_id = null;
 $all_cookbook_name = '';
-$query = "SELECT cookbooks.cookbook_id, cookbooks.name FROM cookbooks JOIN kitchens ON kitchens.owner_id = $owner_id ;";
+$query = "SELECT cookbooks.cookbook_id, cookbooks.name FROM cookbooks WHERE cookbooks.owner_id = $owner_id ;";
 
 $stmt = mysqli_prepare($connect, $query);
 if ($stmt = $connect->prepare($query)) {
