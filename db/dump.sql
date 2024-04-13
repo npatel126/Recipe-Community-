@@ -54,24 +54,24 @@ CREATE TABLE kitchens_cookbooks (
     kitchen_id INT,
     cookbook_id INT,
     PRIMARY KEY (kitchen_id, cookbook_id),
-    FOREIGN KEY(kitchen_id) REFERENCES kitchens(kitchen_id),
-    FOREIGN KEY(cookbook_id) REFERENCES cookbooks(cookbook_id)
+    FOREIGN KEY(kitchen_id) REFERENCES kitchens(kitchen_id) ON DELETE CASCADE,
+    FOREIGN KEY(cookbook_id) REFERENCES cookbooks(cookbook_id) ON DELETE CASCADE
 );
 
 CREATE TABLE cookbooks_recipes (
     cookbook_id INT,
     recipe_id INT,
     PRIMARY KEY(cookbook_id, recipe_id),
-    FOREIGN KEY(cookbook_id) REFERENCES cookbooks(cookbook_id),
-    FOREIGN KEY(recipe_id) REFERENCES recipes(recipe_id)
+    FOREIGN KEY(cookbook_id) REFERENCES cookbooks(cookbook_id) ON DELETE CASCADE,
+    FOREIGN KEY(recipe_id) REFERENCES recipes(recipe_id) ON DELETE CASCADE
 );
 
 CREATE TABLE favorites_recipes (
     favorite_id INT,
     recipe_id INT,
     PRIMARY KEY(favorite_id, recipe_id),
-    FOREIGN KEY(favorite_id) REFERENCES favorites(favorite_id),
-    FOREIGN KEY(recipe_id) REFERENCES recipes(recipe_id)
+    FOREIGN KEY(favorite_id) REFERENCES favorites(favorite_id) ON DELETE CASCADE,
+    FOREIGN KEY(recipe_id) REFERENCES recipes(recipe_id) ON DELETE CASCADE
 );
 
 -- Example/Testing Data entry
