@@ -28,11 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($error_message)) {
         // Prepare and execute the query
-        $query = "SELECT user_id, username, password FROM users WHERE username = ?";
+        $query = "SELECT user_id, username, password, darkmode FROM users WHERE username = ?";
         $stmt = mysqli_prepare($connect, $query);
         mysqli_stmt_bind_param($stmt, "s", $username);
         mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $user_id, $dbUsername, $dbPassword);
+        mysqli_stmt_bind_result($stmt, $user_id, $dbUsername, $dbPassword, $darkmode);
         mysqli_stmt_fetch($stmt);
         // Verify password
         if ($dbUsername && password_verify($password, $dbPassword)) {
@@ -41,7 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $user_id;
-            $_SESSION['darkmode'] = false;
+            //Sets theme to users saved preference.
+            if($darkmode == true){
+                $_SESSION['darkmode'] = true;
+            } elseif($darkmode == false){
+                $_SESSION['darkmode'] = false;
+            } else {
+                $_SESSION['darkmode'] = false;
+            }
             header("Location: dashboard.php");
             exit; // Make sure to exit after header redirection
         } else {
