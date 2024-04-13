@@ -17,17 +17,15 @@ CREATE TABLE kitchens (
     kitchen_id INT AUTO_INCREMENT PRIMARY KEY,
     owner_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
-    -- cookbook_id INT,
-    -- FOREIGN KEY (cookbook_id) REFERENCES cookbooks(cookbook_id),
     FOREIGN KEY (owner_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE cookbooks (
     cookbook_id INT AUTO_INCREMENT PRIMARY KEY,
+    owner_id INT NOT NULL,
     kitchen_id INT,
     name VARCHAR(50) NOT NULL,
-    -- recipe_id INT,
-    -- FOREIGN KEY (recipe_id) REFERENCES recipe_id(recipe_id),
+    FOREIGN KEY (owner_id) REFERENCES users(user_id),
     FOREIGN KEY (kitchen_id) REFERENCES kitchens(kitchen_id)
 );
 
@@ -61,10 +59,8 @@ CREATE TABLE favorites (
 
 -- Example add admin user.
 INSERT INTO users (username, name, password) VALUES ('admin', 'admin', '$2y$10$54/Xfan9DY9UK0CPH60d6uuYkHkK10gERf6hI9dyIpM25.CPd/rcq');
-
 -- Test user for Mia
 INSERT INTO users (username, name, password) VALUES ('miazine', 'Mia', '$2y$10$L9UsivvQlLjsKzUrrHplEevdcDNiN.aDZ05Yt.DbqcFkbJKyn/wMa');
-
 -- Test user for Phil
 INSERT INTO users (username, name, password) VALUES ('philbert', 'Phil', '$2y$10$X/1njNRoPduetVO4ZS4WMeG2pNDIQgNYYoDnXgrhRL9SxnkJofPiO');
 
@@ -73,9 +69,10 @@ INSERT INTO kitchens (owner_id, name) VALUES (2, "Personal");
 INSERT INTO kitchens (owner_id, name) VALUES (2, "For blog");
 
 -- Cookbooks testing
-INSERT INTO cookbooks (kitchen_id, name) VALUES (1, "Breakfast");
-INSERT INTO cookbooks (kitchen_id, name) VALUES (2, "Lunch");
-INSERT INTO cookbooks (kitchen_id, name) VALUES (1, "Dinner");
+INSERT INTO cookbooks (owner_id, kitchen_id, name) VALUES (2, 1, "Breakfast");
+INSERT INTO cookbooks (owner_id, kitchen_id, name) VALUES (2, 2, "Lunch");
+INSERT INTO cookbooks (owner_id, kitchen_id, name) VALUES (2, 1, "Dinner");
+INSERT INTO cookbooks (owner_id, name) VALUES (2, "Desert");
 
 -- Example recipe.
 INSERT INTO recipes (title, description, category, cuisine, ingredients, instructions, prep_time, cook_time, total_time, servings, creator_id, cookbook_id)
