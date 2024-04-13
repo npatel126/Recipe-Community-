@@ -77,26 +77,19 @@ CREATE TABLE favorites_recipes (
 
 -- Example/Testing Data entry
 
--- UID 1 | "Admin" user
-INSERT INTO users (username, name, password) VALUES ('admin', 'admin', '$2y$10$54/Xfan9DY9UK0CPH60d6uuYkHkK10gERf6hI9dyIpM25.CPd/rcq');
--- UID 2 | Test user for Mia
-INSERT INTO users (username, name, password) VALUES ('miazine', 'Mia', '$2y$10$L9UsivvQlLjsKzUrrHplEevdcDNiN.aDZ05Yt.DbqcFkbJKyn/wMa');
--- UID 3 | Test user for Phil
-INSERT INTO users (username, name, password) VALUES ('philbert', 'Phil', '$2y$10$X/1njNRoPduetVO4ZS4WMeG2pNDIQgNYYoDnXgrhRL9SxnkJofPiO');
-
--- Example add admin user. - pwd: pwd
+-- UID 1 | "Admin" user - pwd: pwd
 INSERT INTO users (username, name, password, darkmode) VALUES ('admin', 'admin', '$2y$10$54/Xfan9DY9UK0CPH60d6uuYkHkK10gERf6hI9dyIpM25.CPd/rcq', false);
 
--- Test user for Mia - pwd: webdev
+-- UID 2 | Test user for Mia - pwd: webdev
 INSERT INTO users (username, name, password, darkmode) VALUES ('miazine', 'Mia', '$2y$10$L9UsivvQlLjsKzUrrHplEevdcDNiN.aDZ05Yt.DbqcFkbJKyn/wMa', true);
 
--- Test user for Phil - pwd: procook
+-- UID 3 | Test user for Phil - pwd: procook
 INSERT INTO users (username, name, password, darkmode) VALUES ('philbert', 'Phil', '$2y$10$X/1njNRoPduetVO4ZS4WMeG2pNDIQgNYYoDnXgrhRL9SxnkJofPiO', false);
 
--- Test user for Kevyn - pwd: 1234
+-- UID 4 | Test user for Kevyn - pwd: 1234
 INSERT INTO users (username, name, password, darkmode) VALUES ('kevynwithay', 'Kevyn', '$2y$10$PMj6ttPrMYCHb4DYmKrlxe4IvYUJedoHA3CjleMeggPNNYudsdyUq', true);
 
--- Test user for Susan - pwd: zzz
+-- UID 5 | Test user for Susan - pwd: zzz
 INSERT INTO users (username, name, password, darkmode) VALUES ('SnoozeinSusan', 'Susan', '$2y$10$aB7PWKV8SevspxbZQidwuu2lvsjsIM845HIpcWp.YxcQw/0rNRY6u', false);
 
 -- Kitchens creation
