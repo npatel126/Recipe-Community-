@@ -21,40 +21,50 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <header>
         <h1>Welcome to Your Kitchens, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?>!</h1>
     </header>
+    <?php
+    // Database connection details
+    $server = "db";
+    $user = "admin";
+    $pw = "pwd";
+    $db = "rc";
+
+    $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
+
+    // Retrieve the user ID from the session
+    $user_id = $_SESSION['user_id'];
+    $kitchen_id = null;
+    $kitchen_name = '';
+    $query = "SELECT kitchen_id, name FROM kitchens WHERE owner_id = $user_id ; ";
+
+    $stmt = mysqli_prepare($connect, $query);
+    if ($stmt = $connect->prepare($query)) {
+        $stmt->execute();
+        $stmt->bind_result($kitchen_id, $kitchen_name);
+    }
+
+    $kitchen_ids = array();
+    while ($stmt->fetch()) {
+        $kitchen_ids[$kitchen_id] = $kitchen_name;
+    }
+
+    $stmt->close();
+    mysqli_close($connect);
+
+    ?>
     <main>
-        <h1>Kitchens</h1>
-
         <section>
+            <h1>Kitchens</h1>
+
             <?php
-            // Database connection details
-            $server = "db";
-            $user = "admin";
-            $pw = "pwd";
-            $db = "rc";
-
-            $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
-
-            // Retrieve the user ID from the session
-            $user_id = $_SESSION['user_id'];
-            $kitchen_id = null;
-            $kitchen_name = '';
-            $query = "SELECT kitchen_id, name FROM kitchens WHERE owner_id = $user_id ; ";
-
-            $stmt = mysqli_prepare($connect, $query);
-            if ($stmt = $connect->prepare($query)) {
-                $stmt->execute();
-                $stmt->bind_result($kitchen_id, $kitchen_name);
+            natcasesort($kitchen_ids);
+            print("<table border=1>");
+            print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
+            foreach ($kitchen_ids as $kitchen_id => $kitchen_name) {
+                print("<tr><td>$kitchen_name</td><td><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a></td><td><a href=\"edit_kitchen.php?link=$kitchen_id\">Edit this Kitchen!</a></td></td>");
             }
 
-            $uname = $_SESSION["username"];
-
-            while ($stmt->fetch()) {
-                print("<p>$kitchen_name </p><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a>");
-            }
-
-            $stmt->close();
-            mysqli_close($connect);
             ?>
+            </table>
         </section>
 
         <section>
