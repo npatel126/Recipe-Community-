@@ -6,6 +6,13 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     header("Location: index.php");
     exit;
 }
+
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
+    $style = "css/view_list(dark).css";
+} else {
+    $style = "css/view_list.css";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +21,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Cookbooks</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
 
 <body>
@@ -53,18 +60,28 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     mysqli_close($connect);
     ?>
 
-    <main>
+<main>
         <h1>Cookbooks</h1>
-
-        <?php
-        // TODO: maybe display what kitchen the cookbook belongs to
-        foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-            print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
-        }
-        ?>
-
+        <table>
+            <thead>
+                <tr>
+                    <th>Cookbook Name</th>
+                    <th>View Cookbook</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($cookbook_ids as $cookbook_id => $cookbook_name) : ?>
+                    <tr>
+                        <td><?php echo $cookbook_name; ?></td>
+                        <td><a href="view_cookbook.php?link=<?php echo $cookbook_id; ?>">View this Cookbook!</a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </main>
-    <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
+    <form>
+    <input type="submit" formaction="./dashboard.php" value="Return to Dashboard">
+    </form>
 </body>
 
 </html>
