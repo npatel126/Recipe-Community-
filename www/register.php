@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Display success message with a link to the login page
             echo '<div class="success-container"><div class="success">';
             echo '<p>Registration successful!</p>';
-            echo '<p>Click <a href="login.html">here</a> to login.</p>';
+            echo '<p>Click <a href="login.php">here</a> to login.</p>';
             echo '</div></div>';
         }
     }
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" formaction="./index.php" formnovalidate>Return</button>
             </section>
         </form>
-        <p>If you already have an account, <a href="login.html">click here to log in</a>.</p>
+        <p>If you already have an account, <a href="login.php">click here to log in</a>.</p>
     </main>
 </body>
 
