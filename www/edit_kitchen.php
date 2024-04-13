@@ -15,97 +15,71 @@ if ($_SESSION['darkmode']) {
 }
 
 // DB CONNECTION AND GLOBAL VARS
-// Database connection details
 $server = "db";
 $user = "admin";
 $pw = "pwd";
 $db = "rc";
-
-// Establish a database connection
 $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
-// Retrieve the user ID from the session
 $owner_id = $_SESSION['user_id'];
-
-// Get kitchen_id from incoming link
 $kitchen_id = $_GET['link'];
 
 // DELETE KITCHEN
 //
-// Check if the delete button is clicked
 if (isset($_POST['delete'])) {
-    // Prepare SQL DELETE statement
+    // DELETE kitchen
     $delete_query = "DELETE FROM kitchens WHERE kitchen_id=? AND owner_id=?";
 
-    // Prepare the delete query
     $delete_stmt = mysqli_prepare($connect, $delete_query);
-
-    // Bind parameters
     mysqli_stmt_bind_param($delete_stmt, "ii", $kitchen_id, $owner_id);
-
-    // Execute the delete query
     mysqli_stmt_execute($delete_stmt);
 
-    // Check if any rows were affected
     if (mysqli_stmt_affected_rows($delete_stmt) > 0) {
-        // Redirect to user_kitchens.php
         header("Location: user_kitchens.php");
         exit;
     } else {
         echo "Failed to delete the kitchen.";
     }
 
-    // Close the delete statement
     mysqli_stmt_close($delete_stmt);
 }
 
 // UPDATE KITCHEN
 //
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve and sanitize form data
     $kitchen_name = mysqli_real_escape_string($connect, $_POST['name']);
-    $kc_cbs = $_POST['kc_cb'];
+    $empty_arr[0] = 0;
+    $kc_cbs = isset($_POST['kc_cb']) ? $_POST['kc_cb'] : $empty_arr; // array of selected cookbooks
+    /*
+    if ($kc_cbs === null) {
+        $kc_cbs[0] = 0;
+    };
+    */
     //var_dump($kc_cbs);
-    $qMark_arr = join(',', array_fill(0, count($kc_cbs), '?'));
+    $qMark_arr = join(',', array_fill(0, count($kc_cbs), '?')); // turning the array of cookbooks into '?' for stmt
 
-    // Prepare SQL UPDATE statement to update kitchen name
+    // Update kitchen's name
     $query = "UPDATE kitchens SET name=? WHERE kitchen_id=? AND owner_id=?;";
-
-    // Prepare the query
     $stmt = mysqli_prepare($connect, $query);
-
-    // Bind parameters
     mysqli_stmt_bind_param($stmt, "sii", $kitchen_name, $kitchen_id, $owner_id);
-
-    // Execute the query
     mysqli_stmt_execute($stmt);
 
-    // Prepare SQL UPDATE statement to update kitchen's cookbooks (ADD SELECTED)
-    $query = "UPDATE cookbooks SET cookbooks.kitchen_id=? WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id IN ($qMark_arr);";
+    // Update kitchen's cookbooks (ADD SELECTED)
+    //$query = "UPDATE cookbooks SET cookbooks.kitchen_id=? WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id IN ($qMark_arr);";
+    foreach ($kc_cbs as $i => $cookbook_id) {
+        $query = "INSERT IGNORE INTO kitchens_cookbooks (kitchen_id, cookbook_id) VALUES (?,?)";
+        $stmt2 = mysqli_prepare($connect, $query);
+        mysqli_stmt_bind_param($stmt2, "ii", $kitchen_id, $cookbook_id);
+        mysqli_stmt_execute($stmt2);
+    }
 
-    // Prepare the query
-    $stmt2 = mysqli_prepare($connect, $query);
-
-    // Bind parameters
-    mysqli_stmt_bind_param($stmt2, str_repeat('i', count($kc_cbs) + 2), $kitchen_id, $owner_id, ...$kc_cbs);
-
-    // Execute the query
-    mysqli_stmt_execute($stmt2);
-
-    // Prepare SQL UPDATE statement to update kitchen's cookbooks (REMOVE UNSELECTED)
+    // Update kitchen's cookbooks (REMOVE NON-SELECTED)
     //$query = "UPDATE cookbooks SET cookbooks.kitchen_id=null WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id NOT IN ($qMark_arr);";
+    $query = "Delete FROM kitchens_cookbooks WHERE kitchens_cookbooks.kitchen_id = ? AND kitchens_cookbooks.cookbook_id NOT IN ($qMark_arr);";
+    $stmt3 = mysqli_prepare($connect, $query);
+    mysqli_stmt_bind_param($stmt3, str_repeat('i', count($kc_cbs) + 1), $kitchen_id, ...$kc_cbs);
+    mysqli_stmt_execute($stmt3);
 
-    // Prepare the query
-    //$stmt3 = mysqli_prepare($connect, $query);
-
-    // Bind parameters
-    //mysqli_stmt_bind_param($stmt3, str_repeat('i', count($kc_cbs) + 1), $owner_id, ...$kc_cbs);
-
-    // Execute the query
-    //mysqli_stmt_execute($stmt3);
-
-    // Check if any rows were affected
     // we should probably redo this check ???
     if (mysqli_stmt_affected_rows($stmt) > 0 || mysqli_stmt_affected_rows($stmt2) > 0 || mysqli_stmt_affected_rows($stmt3) > 0) {
         echo "kitchen updated successfully!";
@@ -113,9 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Failed to update the kitchen.";
     }
 
-    // Close the statement
+    // Close the statements
+    // TODO see if u can close them right after call or not; or maybe just one like below
     mysqli_stmt_close($stmt);
     mysqli_stmt_close($stmt2);
+    mysqli_stmt_close($stmt3);
 }
 
 // DISPLAY KITCHEN
@@ -124,7 +100,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $kitchen_name = '';
 $cookbook_id = null;
 $cookbook_name = '';
-$query = "SELECT kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens LEFT JOIN cookbooks ON cookbooks.kitchen_id = $kitchen_id WHERE kitchens.kitchen_id = $kitchen_id AND kitchens.owner_id = $owner_id;";
+//$query = "SELECT kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens LEFT JOIN cookbooks ON cookbooks.kitchen_id = $kitchen_id WHERE kitchens.kitchen_id = $kitchen_id AND kitchens.owner_id = $owner_id;";
+//$query = "Select kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens LEFT JOIN kitchens_cookbooks ON kitchens.kitchen_id = kitchens_cookbooks.kitchen_id RIGHT LEFT JOIN cookbooks on cookbooks.cookbook_id = kitchens_cookbooks.cookbook_id WHERE kitchens.kitchen_id = $kitchen_id AND kitchens.owner_id = $owner_id;";
+
+$query = "Select kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens LEFT JOIN kitchens_cookbooks ON kitchens.kitchen_id = kitchens_cookbooks.kitchen_id LEFT JOIN cookbooks on cookbooks.cookbook_id = kitchens_cookbooks.cookbook_id WHERE kitchens.kitchen_id = $kitchen_id AND kitchens.owner_id = $owner_id;";
 
 $stmt = mysqli_prepare($connect, $query);
 if ($stmt = $connect->prepare($query)) {
@@ -142,7 +121,6 @@ while ($stmt->fetch()) {
 if (current($cookbook_ids) === null) {
     $cookbook_ids = null;
 }
-
 
 // get info to display all of the users cookbooks
 $all_cookbook_ids = array();
@@ -193,13 +171,20 @@ mysqli_close($connect);
             ?>
             <h3> My cookbooks </h3>
             <?php
+            if ($cookbook_ids === null) {
+                $cookbook_ids[0] = 0; // define something that will never happen to print all
+            }
             foreach ($all_cookbook_ids as $all_cookbook_id => $all_cookbook_name) {
-                print("<p><input type=\"checkbox\" id=\"$all_cookbook_id\" name=\"kc_cb[]\" value=\"$all_cookbook_id\" /><lable for=\"$all_cookbook_id\">$all_cookbook_name</p>");
+                if (!array_key_exists($all_cookbook_id, $cookbook_ids)) {
+                    print("<p><input type=\"checkbox\" id=\"$all_cookbook_id\" name=\"kc_cb[]\" value=\"$all_cookbook_id\" /><lable for=\"$all_cookbook_id\">$all_cookbook_name</p>");
+                }
             }
             ?>
             <h4>All checked cookbooks will be placed into this kitchen</h4>
             <button type="submit">Submit</button>
-            <button type="button" onclick="window.location.href = 'user_kitchens.php';">Go Back</button>
+            <?php
+            print("<button type=\"button\" onclick=\"window.location.href = 'view_kitchen.php?link=$kitchen_id'\">Go Back</button>");
+            ?>
             <button formnovalidate type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this kitchen?');">Delete kitchen </button>
         </form>
     </main>
