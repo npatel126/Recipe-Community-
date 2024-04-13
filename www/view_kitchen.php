@@ -33,12 +33,13 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $kitchen_name = '';
     $cookbook_id = null;
     $cookbook_name = '';
-    $query = "SELECT cookbooks.cookbook_id, cookbooks.name, kitchens.name FROM kitchens LEFT JOIN cookbooks ON kitchens.kitchen_id  = cookbooks.kitchen_id WHERE kitchens.owner_id = $owner_id AND (cookbooks.kitchen_id = $kitchen_id OR cookbooks.kitchen_id IS NULL); ";
+    //$query = "SELECT cookbooks.cookbook_id, cookbooks.name, kitchens.name FROM kitchens LEFT JOIN cookbooks ON kitchens.kitchen_id  = cookbooks.kitchen_id WHERE kitchens.owner_id = $owner_id AND (cookbooks.kitchen_id = $kitchen_id OR cookbooks.kitchen_id IS NULL); ";
+    $query = "Select kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens LEFT JOIN kitchens_cookbooks ON kitchens_cookbooks.kitchen_id = kitchens.kitchen_id LEFT JOIN cookbooks ON kitchens_cookbooks.cookbook_id = cookbooks.cookbook_id WHERE kitchens.owner_id = $owner_id AND kitchens.kitchen_id = $kitchen_id";
 
     $stmt = mysqli_prepare($connect, $query);
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($cookbook_id, $cookbook_name, $kitchen_name);
+        $stmt->bind_result($kitchen_name, $cookbook_id, $cookbook_name);
     }
 
     $uname = $_SESSION["username"];
@@ -47,7 +48,6 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         $cookbook_ids[$cookbook_id] = $cookbook_name;
     }
 
-    var_dump($cookbook_ids);
     // kitchens with no cookbooks will still return a null one
     if (current($cookbook_ids) === null) {
         $cookbook_ids = null;
@@ -63,14 +63,15 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         <section>
             <h1>Cookbooks</h1>
             <?php
+            //var_dump($cookbook_ids);
             // only display table if cookbooks exist
-            var_dump($cookbook_ids);
-            if ($cookbook_ids !== null) {
+            if (($cookbook_ids !== null) && (sizeof($cookbook_ids) > 0)) {
                 // if a kitchen exists that has no cookbooks we'll have a null entry on the end, remove it
+                /*
                 if ((end($cookbook_ids) === null) && (count($cookbook_ids) > 1)) {
                     $trash = array_pop($cookbook_ids); // this will be null 
                 }
-                var_dump($cookbook_ids);
+                */
                 natcasesort($cookbook_ids);
                 print("<table border=1>");
                 print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
