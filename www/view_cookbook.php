@@ -32,12 +32,13 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $cookbook_id = $_GET['link'];
     $cookbook_name = '';
     $recipe_name = '';
-    $query = "SELECT recipe_id, recipes.title, cookbooks.name FROM cookbooks LEFT JOIN recipes ON cookbooks.cookbook_id = recipes.cookbook_id WHERE cookbooks.owner_id = $owner_id AND cookbooks.cookbook_id  = $cookbook_id; ";
+    //$query = "SELECT recipe_id, recipes.title, cookbooks.name FROM cookbooks LEFT JOIN recipes ON cookbooks.cookbook_id = recipes.cookbook_id WHERE cookbooks.owner_id = $owner_id AND cookbooks.cookbook_id  = $cookbook_id; ";
+    $query = "SELECT cookbooks.name, recipes.recipe_id, recipes.name FROM cookbooks LEFT JOIN cookbooks_recipes ON cookbooks_recipes.cookbook_id = cookbooks.cookbook_id LEFT JOIN recipes ON cookbooks_recipes.recipe_id = recipes.recipe_id WHERE cookbooks.owner_id = $owner_id AND cookbooks.cookbook_id = $cookbook_id;";
 
     $stmt = mysqli_prepare($connect, $query);
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($recipe_id, $recipe_name, $cookbook_name);
+        $stmt->bind_result($cookbook_name, $recipe_id, $recipe_name);
     }
 
     $uname = $_SESSION["username"];
@@ -55,6 +56,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
     $stmt->close();
     mysqli_close($connect);
+
     print("<h1>Recipes in $uname's $cookbook_name cookbook</h1>");
     ?>
 
@@ -62,7 +64,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         <section>
             <h1>Recipes</h1>
             <?php
-            if ($recipe_ids !== null) {
+            if ($recipe_ids !== null && (sizeof($recipe_ids) > 0)) {
                 natcasesort($recipe_ids);
                 print("<table border=1>");
                 print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
