@@ -2,10 +2,11 @@
 // Start the session
 session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['loggedin'])) {
+if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
+    //echo "Welcome, " . $_SESSION["username"];
+} else {
     header("Location: index.php");
-    exit; // Exit the script if the user is not logged in
+    exit;
 }
 // Toggle style session variable
 if ($_SESSION['darkmode']) {
