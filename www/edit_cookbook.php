@@ -177,6 +177,7 @@ mysqli_close($connect);
             }
             ?>
             <h4>All checked recipes will be placed into this cookbook</h4>
+            <h4>All un-checked recipes will be removed from this cookbook</h4>
             <button type="submit">Submit</button>
             <?php
             print("<button type=\"button\" onclick=\"window.location.href = 'view_cookbook.php?link=$cookbook_id'\">Go Back</button>");

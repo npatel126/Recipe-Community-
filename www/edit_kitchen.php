@@ -181,6 +181,7 @@ mysqli_close($connect);
             }
             ?>
             <h4>All checked cookbooks will be placed into this kitchen</h4>
+            <h4>All un-checked cookbooks will be removed from this kitchen</h4>
             <button type="submit">Submit</button>
             <?php
             print("<button type=\"button\" onclick=\"window.location.href = 'view_kitchen.php?link=$kitchen_id'\">Go Back</button>");
