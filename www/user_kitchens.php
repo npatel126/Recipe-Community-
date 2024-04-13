@@ -56,11 +56,15 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
             <h1>Kitchens</h1>
 
             <?php
-            natcasesort($kitchen_ids);
-            print("<table border=1>");
-            print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
-            foreach ($kitchen_ids as $kitchen_id => $kitchen_name) {
-                print("<tr><td>$kitchen_name</td><td><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a></td><td><a href=\"edit_kitchen.php?link=$kitchen_id\">Edit this Kitchen!</a></td></td>");
+            if (($kitchen_ids !== null) && (sizeof($kitchen_ids) > 0)) {
+                natcasesort($kitchen_ids);
+                print("<table border=1>");
+                print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
+                foreach ($kitchen_ids as $kitchen_id => $kitchen_name) {
+                    print("<tr><td>$kitchen_name</td><td><a href=\"view_kitchen.php?link=$kitchen_id\">View this Kitchen!</a></td><td><a href=\"edit_kitchen.php?link=$kitchen_id\">Edit this Kitchen!</a></td></td>");
+                }
+            } else {
+                print("Create a kitchen!");
             }
 
             ?>
