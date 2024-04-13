@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <section>
                 <button type="submit">Login</button>
-                <a href="register.html">Register</a> 
+                <a href="register.php">Register</a> 
             </section>
             <br>
             <button type="submit" formaction="./index.php" formnovalidate>Return</button>
