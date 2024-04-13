@@ -32,15 +32,14 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
     // Retrieve the user ID from the session
     $user_id = $_SESSION['user_id'];
-    $kitchen_name = '';
     $cookbook_id = null;
     $cookbook_name = '';
-    $query = "SELECT cookbooks.cookbook_id, cookbooks.name, kitchens.name FROM cookbooks JOIN kitchens ON kitchens.owner_id  = $user_id ; ";
+    $query = "SELECT cookbooks.cookbook_id, cookbooks.name FROM cookbooks WHERE cookbooks.owner_id=$user_id ; ";
 
     $stmt = mysqli_prepare($connect, $query);
     if ($stmt = $connect->prepare($query)) {
         $stmt->execute();
-        $stmt->bind_result($cookbook_id, $cookbook_name, $kitchen_name);
+        $stmt->bind_result($cookbook_id, $cookbook_name);
     }
 
     $uname = $_SESSION["username"];
