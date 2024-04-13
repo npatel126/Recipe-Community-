@@ -68,7 +68,7 @@ if (mysqli_stmt_fetch($stmt_recipes)) {
     echo "<table border='1'>";
     echo "<tr> <th>Name</th> <th>Description</th> <th>Category</th> <th>View recipe</th> <th>Edit</th> </tr>";
     do {
-        echo "<tr><td>$name</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipes.php?recipe_id=$recipe_id\">Edit</a></td></tr>";
+        echo "<tr><td>$name</td><td>$description</td><td>$category</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipe.php?recipe_id=$recipe_id\">Edit</a></td></tr>";
     } while (mysqli_stmt_fetch($stmt_recipes));
     echo "</table>";
 } else {

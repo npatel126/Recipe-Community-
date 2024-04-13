@@ -69,7 +69,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
                 print("<table border=1>");
                 print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
                 foreach ($recipe_ids as $recipe_id => $recipe_name) {
-                    print("<tr><td>$recipe_name</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipes.php?link=$recipe_id\">Edit this Recipe!</a></td></tr>");
+                    print("<tr><td>$recipe_name</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipe.php?link=$recipe_id\">Edit this Recipe!</a></td></tr>");
                 }
             } else {
                 print("Edit this cookbook to add recipes!");
