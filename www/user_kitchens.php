@@ -59,9 +59,9 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
         <section>
         <h1>Kitchen Actions</h1>
-        <button onclick="window.location.href = 'add_kitchen.php';">Add a kitchen</button>
-        <button onclick="window.location.href = 'edit_kitchen.php';">Edit a kitchen</button>
-        <button onclick="window.location.href = 'delete_kitchen.php';">Delete a kitchen</button>
+        <button onclick="window.location.href = 'add_kitchen.php'; ">Add a kitchen</button>
+        <button onclick="window.location.href = 'edit_kitchen.php?link=$kitchen_id';">Edit a kitchen</button>
+        <button onclick="window.location.href = 'delete_kitchen.php?link=$kitchen_id';">Delete a kitchen</button>
         </section>
 
     </main>

@@ -67,9 +67,9 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
         <section>
             <h1>Cookbook actions</h1>
-            <button onclick="window.location.href = 'add_cookbook.php';">Add a cookbook</button>
-            <button onclick="window.location.href = 'edit_cookbook.php';">Edit a cookbook</button>
-            <button onclick="window.location.href = 'delete_cookbook.php';">Delete a cookbook</button>
+            <button onclick="window.location.href = 'add_cookbook.php'; ">Add a cookbook</button>
+            <button onclick="window.location.href = 'edit_cookbook.php?link=$cookbook_id';">Edit a cookbook</button>
+            <button onclick="window.location.href = 'delete_cookbook.php?link=$cookbook_info';">Delete a cookbook</button>
         </section>
     </main>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
