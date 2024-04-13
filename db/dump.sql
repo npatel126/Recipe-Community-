@@ -24,7 +24,7 @@ CREATE TABLE kitchens (
 
 CREATE TABLE cookbooks (
     cookbook_id INT AUTO_INCREMENT PRIMARY KEY,
-    kitchen_id INT NOT NULL,
+    kitchen_id INT,
     name VARCHAR(50) NOT NULL,
     -- recipe_id INT,
     -- FOREIGN KEY (recipe_id) REFERENCES recipe_id(recipe_id),
@@ -74,7 +74,7 @@ INSERT INTO kitchens (owner_id, name) VALUES (2, "For blog");
 
 -- Cookbooks testing
 INSERT INTO cookbooks (kitchen_id, name) VALUES (1, "Breakfast");
-INSERT INTO cookbooks (kitchen_id, name) VALUES (1, "Lunch");
+INSERT INTO cookbooks (kitchen_id, name) VALUES (2, "Lunch");
 INSERT INTO cookbooks (kitchen_id, name) VALUES (1, "Dinner");
 
 -- Example recipe.
