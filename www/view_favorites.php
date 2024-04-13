@@ -41,7 +41,7 @@ if ($_SESSION['darkmode']) {
 
 
     // Get session user's id
-    $user_id = $_SESSION["user_id"];
+    $owner_id = $_SESSION["user_id"];
 
     // init vars for query return
     $title = "";
@@ -49,9 +49,10 @@ if ($_SESSION['darkmode']) {
     $category = "";
 
     // Search DB for the user's favorite recipe(s) 
-    $query = "SELECT recipes.recipe_id, title, description, category FROM recipes JOIN favorites ON favorites.recipe_id = recipes.recipe_id JOIN users ON favorites.owner_id = users.user_id WHERE users.user_id = ?; ";
+    //$query = "SELECT recipes.recipe_id, title, description, category FROM recipes JOIN favorites ON favorites.recipe_id = recipes.recipe_id JOIN users ON favorites.owner_id = users.user_id WHERE users.user_id = ?; ";
+    $query = "SELECT recipes.recipe_id, recipes.name, recipes.description, recipes.category FROM recipes JOIN favorites_recipes ON recipes.recipe_id = favorites_recipes.recipe_id JOIN favorites on favorites.favorite_id = favorites_recipes.favorite_id WHERE favorites.owner_id = ?";
     $stmt = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_bind_param($stmt, "i", $owner_id);
     $stmt->execute();
     $stmt->bind_result($recipe_id, $title, $description, $category);
 
