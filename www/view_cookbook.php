@@ -28,11 +28,11 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
     // Retrieve the user ID from the session
-    $user_id = $_SESSION['user_id'];
+    $owner_id = $_SESSION['user_id'];
     $cookbook_id = $_GET['link'];
     $cookbook_name = '';
     $recipe_name = '';
-    $query = "SELECT recipe_id, recipes.title, cookbooks.name FROM recipes JOIN cookbooks ON cookbooks.cookbook_id = $cookbook_id WHERE recipes.cookbook_id = $cookbook_id; ";
+    $query = "SELECT recipe_id, recipes.title, cookbooks.name FROM cookbooks LEFT JOIN recipes ON cookbooks.cookbook_id = recipes.cookbook_id WHERE cookbooks.owner_id = $owner_id AND cookbooks.cookbook_id  = $cookbook_id; ";
 
     $stmt = mysqli_prepare($connect, $query);
     if ($stmt = $connect->prepare($query)) {
@@ -47,6 +47,12 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         //$cookbook_name = $cookbook_name;
     }
 
+    // Cookbooks with no recipes will still return a null one
+    if (current($recipe_ids) === null) {
+        $recipe_ids = null;
+    }
+   
+
     $stmt->close();
     mysqli_close($connect);
     print("<h1>Recipes in $uname's $cookbook_name cookbook</h1>");
@@ -55,12 +61,19 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <main>
         <section>
             <h1>Recipes</h1>
-
             <?php
-            foreach ($recipe_ids as $recipe_id => $recipe_name) {
-                print("<p>$recipe_name <a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></p>");
+            if ($recipe_ids !== null) {
+                natcasesort($recipe_ids);
+                print("<table border=1>");
+                print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
+                foreach ($recipe_ids as $recipe_id => $recipe_name) {
+                    print("<tr><td>$recipe_name</td><td><a href=\"view_recipe.php?link=$recipe_id\">View this Recipe!</a></td><td><a href=\"edit_recipes.php?link=$recipe_id\">Edit this Recipe!</a></td></tr>");
+                }
+            } else {
+                print("Edit this cookbook to add recipes!");
             }
             ?>
+            </table>
         </section>
         <section>
             <h1>Cookbook actions</h1>
@@ -68,6 +81,7 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         </section>
 
     </main>
+    <button onclick="window.location.href = 'user_cookbooks.php';">Return to Cookbooks</button>
     <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
 </body>
 

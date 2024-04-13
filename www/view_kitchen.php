@@ -28,11 +28,12 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
     // Retrieve the user ID from the session
+    $owner_id = $_SESSION['user_id'];
     $kitchen_id = $_GET['link'];
     $kitchen_name = '';
     $cookbook_id = null;
     $cookbook_name = '';
-    $query = "SELECT cookbooks.cookbook_id, cookbooks.name, kitchens.name FROM cookbooks JOIN kitchens ON kitchens.kitchen_id  = $kitchen_id WHERE cookbooks.kitchen_id = $kitchen_id ; ";
+    $query = "SELECT cookbooks.cookbook_id, cookbooks.name, kitchens.name FROM kitchens LEFT JOIN cookbooks ON kitchens.kitchen_id  = cookbooks.kitchen_id WHERE kitchens.owner_id = $owner_id AND (cookbooks.kitchen_id = $kitchen_id OR cookbooks.kitchen_id IS NULL); ";
 
     $stmt = mysqli_prepare($connect, $query);
     if ($stmt = $connect->prepare($query)) {
@@ -46,6 +47,12 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
         $cookbook_ids[$cookbook_id] = $cookbook_name;
     }
 
+    var_dump($cookbook_ids);
+    // kitchens with no cookbooks will still return a null one
+    if (current($cookbook_ids) === null) {
+        $cookbook_ids = null;
+    }
+
     $stmt->close();
     mysqli_close($connect);
 
@@ -55,15 +62,30 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     <main>
         <section>
             <h1>Cookbooks</h1>
-
             <?php
-            foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-                print("<p>$cookbook_name <a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></p>");
+            // only display table if cookbooks exist
+            var_dump($cookbook_ids);
+            if ($cookbook_ids !== null) {
+                // if a kitchen exists that has no cookbooks we'll have a null entry on the end, remove it
+                if ((end($cookbook_ids) === null) && (count($cookbook_ids) > 1)) {
+                    $trash = array_pop($cookbook_ids); // this will be null 
+                }
+                var_dump($cookbook_ids);
+                natcasesort($cookbook_ids);
+                print("<table border=1>");
+                print("<tr> <th>Name</th> <th>View</th> <th>Edit</th> </tr>");
+                foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
+                    print("<tr><td>$cookbook_name</td><td><a href=\"view_cookbook.php?link=$cookbook_id\">View this Cookbook!</a></td><td><a href=\"edit_cookbook.php?link=$cookbook_id\">Edit this Cookbook!</a></td></tr>");
+                }
+            } else {
+                print("Edit this kitchen to add cookbooks!");
             }
+
             ?>
+            </table>
         </section>
         <section>
-            <h1>Cookbook actions</h1>
+            <h1>Kitchen actions</h1>
             <?php print("<button onclick=\"window.location.href = 'edit_kitchen.php?link=$kitchen_id' \">Edit this kitchen</button>"); ?>
         </section>
     </main>

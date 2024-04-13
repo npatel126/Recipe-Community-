@@ -26,10 +26,9 @@ $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to
 
 // Retrieve the user ID from the session
 $owner_id = $_SESSION['user_id'];
-$kitchen_id = $_GET['link'];
 
-// Initialize variables to store kitchen details
-$kitchen_name = "";
+// Get kitchen_id from incoming link
+$kitchen_id = $_GET['link'];
 
 // DELETE KITCHEN
 //
@@ -67,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize form data
     $kitchen_name = mysqli_real_escape_string($connect, $_POST['name']);
     $kc_cbs = $_POST['kc_cb'];
+    //var_dump($kc_cbs);
     $qMark_arr = join(',', array_fill(0, count($kc_cbs), '?'));
 
     // Prepare SQL UPDATE statement to update kitchen name
@@ -94,16 +94,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_stmt_execute($stmt2);
 
     // Prepare SQL UPDATE statement to update kitchen's cookbooks (REMOVE UNSELECTED)
-    $query = "UPDATE cookbooks SET cookbooks.kitchen_id=null WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id NOT IN ($qMark_arr);";
+    //$query = "UPDATE cookbooks SET cookbooks.kitchen_id=null WHERE cookbooks.owner_id=? AND cookbooks.cookbook_id NOT IN ($qMark_arr);";
 
     // Prepare the query
-    $stmt3 = mysqli_prepare($connect, $query);
+    //$stmt3 = mysqli_prepare($connect, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt3, str_repeat('i', count($kc_cbs) + 1), $owner_id, ...$kc_cbs);
+    //mysqli_stmt_bind_param($stmt3, str_repeat('i', count($kc_cbs) + 1), $owner_id, ...$kc_cbs);
 
     // Execute the query
-    mysqli_stmt_execute($stmt3);
+    //mysqli_stmt_execute($stmt3);
 
     // Check if any rows were affected
     // we should probably redo this check ???
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $kitchen_name = '';
 $cookbook_id = null;
 $cookbook_name = '';
-$query = "SELECT kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens JOIN cookbooks ON cookbooks.kitchen_id = $kitchen_id WHERE kitchens.kitchen_id = $kitchen_id AND kitchens.owner_id = $owner_id;";
+$query = "SELECT kitchens.name, cookbooks.cookbook_id, cookbooks.name FROM kitchens LEFT JOIN cookbooks ON cookbooks.kitchen_id = $kitchen_id WHERE kitchens.kitchen_id = $kitchen_id AND kitchens.owner_id = $owner_id;";
 
 $stmt = mysqli_prepare($connect, $query);
 if ($stmt = $connect->prepare($query)) {
@@ -135,6 +135,12 @@ if ($stmt = $connect->prepare($query)) {
 $cookbook_ids = array();
 while ($stmt->fetch()) {
     $cookbook_ids[$cookbook_id] = $cookbook_name;
+}
+
+
+// kitchens with no cookbooks will still return a null one
+if (current($cookbook_ids) === null) {
+    $cookbook_ids = null;
 }
 
 
@@ -175,11 +181,14 @@ mysqli_close($connect);
         <form action="" method="post">
             <label for="name">Kitchen name:</label>
             <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($kitchen_name); ?>" required>
-            <!-- todo: put cookbooks here to add/remove. see about using check box list -->
             <h3> Cookbooks in this kitchen </h3>
             <?php
-            foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
-                print("<p><input type=\"checkbox\" id=\"$cookbook_id\" name=\"kc_cb[]\" value=\"$cookbook_id\" checked/><lable for=\"$cookbook_id\">$cookbook_name</lable></p>");
+            if ($cookbook_ids !== null) {
+                foreach ($cookbook_ids as $cookbook_id => $cookbook_name) {
+                    print("<p><input type=\"checkbox\" id=\"$cookbook_id\" name=\"kc_cb[]\" value=\"$cookbook_id\" checked/><lable for=\"$cookbook_id\">$cookbook_name</lable></p>");
+                }
+            } else {
+                print("Select a cookbook to add it to your kitchen!");
             }
             ?>
             <h3> My cookbooks </h3>
