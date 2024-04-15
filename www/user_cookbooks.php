@@ -80,7 +80,9 @@ if ($_SESSION['darkmode']) {
 
         <section>
             <h1>Cookbook actions</h1>
-            <button onclick="window.location.href = 'add_cookbook.php'; ">Add a cookbook</button>
+            <form>
+            <input type="submit" formaction="./add_cookbook.php" value="Add a Cookbook">
+            </form>
         </section>
     </main>
     <form>
