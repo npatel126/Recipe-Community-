@@ -86,12 +86,14 @@ if ($_SESSION['darkmode']) {
         </section>
         <section>
             <h1>Cookbook actions</h1>
-            <?php print("<button onclick=\"window.location.href = 'edit_cookbook.php?link=$cookbook_id';\">Edit this cookbook</button>"); ?>
+            <input type='submit' onclick="window.location.href = 'edit_cookbook.php?link=<?php echo $cookbook_id; ?>'" value="Edit this cookbook">
         </section>
 
     </main>
-    <button onclick="window.location.href = 'user_cookbooks.php';">Return to Cookbooks</button>
-    <button onclick="window.location.href = 'dashboard.php';">Return to dashboard</button>
+    <form>
+        <input type="submit" formaction="./user_cookbooks.php" value="Return to Cookbooks">
+        <input type="submit" formaction="./dashboard.php" value="Return to Dashboard">
+    </form>
 </body>
 
 </html>
