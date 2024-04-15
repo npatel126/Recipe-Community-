@@ -58,7 +58,7 @@ if ($_SESSION['darkmode']) {
 
     if ($stmt->fetch()) {
 
-        print("<h1> My favortie recipes</h1>");
+        print("<h1> My Favorite Recipes</h1>");
 
         print("<table border=1>");
         print("<tr> <th>Name</th> <th>Description</th> <th>Category</th> <th>View</th> </tr>");

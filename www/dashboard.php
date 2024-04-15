@@ -78,11 +78,11 @@ mysqli_close($connect);
 
 <body>
     <header>
-        <h1>Welcome to Your Dashboard, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?>!</h1>
+        <h1>Welcome to Your Dashboard, <?php echo $user_name?>!</h1>
         <?php if (!isset($_SESSION["username"])) : ?>
-            <button onclick="window.location.href = 'login.html';">Login</button>
+            <button onclick="window.location.href = 'login.php';">Login</button>
         <?php else : ?>
-            <p>Name: <?php echo $user_name; ?></p>
+            <p>Username: <?php echo $_SESSION['username']; ?></p>
             <button onclick="window.location.href = 'logout.php';">Logout</button>
         <?php endif; ?>
     </header>
