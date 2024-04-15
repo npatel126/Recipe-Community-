@@ -30,15 +30,20 @@ main {
 }
 
 /* Heading styles */
-h1, h2 {
-    color: #fff;
+h1 {
+    color: #fff; /* Set text color to white */
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #000; /* Set text color to black */
     margin-bottom: 10px;
 }
 
 /* Button styles */
 button {
     background-color: #007bff;
-    color: #fff;
+    color: #fff; /* Set text color to white */
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -60,6 +65,11 @@ ul {
 /* List item styles */
 li {
     margin-bottom: 10px;
+}
+
+/* Table cell styles */
+table td {
+    color: #000; /* Set text color to black */
 }
 
 /* Responsive styles */

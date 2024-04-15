@@ -68,3 +68,7 @@ li {
         padding: 10px;
     }
 }
+
+table td {
+    color: #FFF; /* Set the text color for table cells */
+}
