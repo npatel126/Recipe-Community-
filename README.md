@@ -33,10 +33,19 @@ Download and run Recipe Community, then use one of these demo users to try it ou
 - Username: SnoozeinSusan
 - Password: zzz
 
-# How to use Recipe Community
+Or you can create your own account!
+
+Once you've logged into Recipe Community take a look around!
+You can add recipes, create kitchens and cookbooks, and search for recipes that you want to add to your repertoire.
+To add a cookbook to a kitchen or a recipe to a cookbook, simply select what you would like to add!
+If you find a recipe that you like you can add it to your favorites as well!
+
+Bon appétit!
+
+# How to run Recipe Community
 
 Recipe Community currently runs on a LAMP stack hosted inside of a Docker container cluster.
-If you already have Docker installed on your system, you are ready to go to the next step.
+If you already have Docker installed on your system, you are ready to go to the next step after you clone the repository to your system.
 If not, you can refer to the below links for instructions on how to install Docker on your machine.
 
 ## How to install Docker
@@ -53,7 +62,7 @@ If not, you can refer to the below links for instructions on how to install Dock
 
 [Official Documentation](https://docs.docker.com/desktop/install/linux-install/)
 
-## How to run Recipe Community
+## How to launch Recipe Community
 
 Ensure that the Docker daemon is running.
 Note: Administrator privileges will likely be required to run either of the above commands, hence the `sudo` command.
@@ -119,4 +128,4 @@ The `www` directory contains the HTML and PHP files that make up the body of the
 
 The files that relate to the Docker containers are located in the root directory of the project.
 
-## This is the repo for group 5's 4900 group project
+## This is the repo for Group 5's 4900 group project.
