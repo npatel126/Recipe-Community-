@@ -79,9 +79,11 @@ if ($_SESSION['darkmode']) {
         </section>
 
         <section>
-            <h1>Kitchen Actions</h1>
-            <button onclick="window.location.href = 'add_kitchen.php'; ">Add a kitchen</button>
-        </section>
+    <h1>Kitchen Actions</h1>
+    <form>
+    <input type="submit" formaction="./add_kitchen.php" value="Add a Kitchen">
+    </form>
+</section>
     </main>
     <form>
     <input type="submit" formaction="./dashboard.php" value="Return to Dashboard">
