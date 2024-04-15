@@ -19,20 +19,19 @@ $user_id = $_SESSION["user_id"];
     $style = "css/view_list.css";
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Recipe Search Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Recipe Page</title>
     <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
-
 <body>
-
     <?php
+    // Include favorites functions file
+    include 'favorites_functions.php';
+
     // Database connection details
     $server = "db";
     $user = "admin";
@@ -59,9 +58,9 @@ $user_id = $_SESSION["user_id"];
 
     // Search DB for recipe(s) matching description
     $query = "SELECT r.recipe_id, r.name, r.description, r.category, r.cuisine, r.ingredients, r.instructions, r.prep_time, r.cook_time, r.total_time, r.servings, r.creator_id, u.username
-              FROM recipes r
-              INNER JOIN users u ON r.creator_id = u.user_id
-              WHERE r.recipe_id = '$search'; ";
+            FROM recipes r
+            INNER JOIN users u ON r.creator_id = u.user_id
+            WHERE r.recipe_id = '$search'; ";
 
     $stmt = mysqli_prepare($connect, $query);
 
@@ -83,7 +82,7 @@ $user_id = $_SESSION["user_id"];
         }
         return $formatted_time;
     }
-    
+
     // TODO: trim ???
     while ($stmt->fetch()) {
         $ingredients_list = explode('|', $ingredients);
@@ -112,94 +111,31 @@ $user_id = $_SESSION["user_id"];
     }
     // close statement
     $stmt->close();
-    
+
 
     // add/remove from favorites
     // if not in favorites display add 
     // if in favorites display remove
 
-    function check_favorite($connect, $u_id, $r_id)
-    {
-        $is_favorite = false;
-        $recipe_id = null;
-        //$query = "SELECT owner_id FROM favorites WHERE recipe_id = $r_id ;";
-        //$query = "SELECT recipes.recipe_id FROM recipes JOIN favorites_recipes ON recipes.recipe_id = favorites_recipes.recipe_id JOIN favorites ON favorites.favorite_id = favorites_recipes.favorite_id WHERE recipes.recipe_id = $r_id AND favorites.owner_id = $u_id";
-        // ^^^ old ideas
-        //
-        // Ideas
-        // $query = INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES ((INSERT INTO favorites (owner_id) OUPUT Inserted.PrimaryKey VALUES (2), 10));
-        $query = "SELECT favorites.favorite_id FROM favorites JOIN favorites_recipes ON favorites.favorite_id = favorites_recipes.favorite_id JOIN recipes "
-        $stmt = "";
-        if ($stmt = $connect->prepare($query)) {
-            $stmt->execute();
-            $stmt->bind_result($recipe_id);
-        }
-        while ($stmt->fetch()) {
-            if ($recipe_id == $r_id) {
-                $is_favorite = true;
-            }
-        }
-        $stmt->close();
-        return $is_favorite;
-    }
-
-    function add_favorite($connect, $u_id, $r_id)
-    {
-        //$query = "INSERT INTO favorites (owner_id, recipe_id) VALUES (?, ?); ";
-        $fav_id = '';
-        $query = "SELECT favorite_id FROM favorites WHERE owner_id = ?";
-        $stmt = mysqli_prepare($connect, $query);
-        mysqli_stmt_bind_param($stmt, "i", $u_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $fav_id);
-        var_dump($fav_id);
-        mysqli_stmt_reset($stmt);
-
-        $query = "INSERT INTO favorites_recipes (favorite_id, recipe_id) VALUES (?,?);";
-        $stmt = mysqli_prepare($connect, $query);
-        mysqli_stmt_bind_param($stmt, "ii", $fav_id, $r_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-
-    function remove_favorite($connect, $u_id, $r_id)
-    {
-        $fav_id = '';
-        $query = "SELECT favorite_id FROM favorites WHERE owner_id = ?";
-        $stmt = mysqli_prepare($connect, $query);
-        mysqli_stmt_bind_param($stmt, "i", $u_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $fav_id);
-        mysqli_stmt_reset($stmt);
-
-        $query = "DELETE FROM favorites_recipes WHERE favorite_id = ? AND recipe_id = ?; ";
-        $stmt = mysqli_prepare($connect, $query);
-        mysqli_stmt_bind_param($stmt, "ii", $fav_id, $r_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-
-    if(isset($_POST['favorite'])) {
+    if (isset($_POST['favorite'])) {
         add_favorite($connect, $user_id, $recipe_id);
-    } 
-    if(isset($_POST['unfavorite'])){
+    }
+    if (isset($_POST['unfavorite'])) {
         remove_favorite($connect, $user_id, $recipe_id);
     }
 
     if (check_favorite($connect, $user_id, $recipe_id)) {
         # is in favorites
-        print("<p> <i>This recipe is in your favorites.</i> </p>");
+        print("<br><p> <i>This recipe is in your favorites.</i> </p>");
         print("<form method=\"post\"><p><input type=\"submit\" name=\"unfavorite\" value=\"Unfavorite!\"></p></form>");
     } else {
         # is not in favorites
-        print("<p> <i>This recipe is not in your favorites.</i> </p>");
+        print("<br><p> <i>This recipe is not in your favorites.</i> </p>");
         print("<form method=\"post\"><p><input type=\"submit\" name=\"favorite\" value=\"Favorite!\"></p></form>");
     }
 
-
     // close connection with db
     mysqli_close($connect);
-
     ?>
     <form>
         <p>
@@ -207,7 +143,5 @@ $user_id = $_SESSION["user_id"];
             <input type="submit" formaction="./dashboard.php" value="Return to Dashboard">
         </p>
     </form>
-
 </body>
-
 </html>
