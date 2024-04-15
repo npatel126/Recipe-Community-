@@ -1,18 +1,37 @@
 # Recipe-Community-
 
-## This is the repo for group 5's 4900 group project
-
 # About Recipe-Community
 
 Recipe Community aims to be an app for cooking enthusiasts and food lovers who are looking for a user-friendly way to discover, save, and share recipes with other like-minded chefs. Recipe Community is a collaborative culinary platform that simplifies the process of finding and curating delicious dishes.
 
-# !!!WARNING!!!
+# Try it out!
 
-**Recipe Community is currently in ACTIVE DEVELOPMENT**
+Download and run Recipe Community, then use one of these demo users to try it out!
 
-Currently things are not production ready when it comes to certain things; such as security.
-Certain information will be hard-coded (or empty) to ease development, this will change for release. 
-Of course if you are running this locally at any time in a non-development capacity you are free to alter these things to your liking.
+##### Demo user 1:
+- Name: admin [no special privileges]
+- Username: admin
+- Password: pwd
+
+##### Demo user 2:
+- Name: Mia
+- Username: miazine
+- Password: webdev
+
+##### Demo user 3:
+- Name: Phil
+- Username: philbert
+- Password: procook
+
+##### Demo user 4:
+- Name: Kevyn
+- Username: kevynwithay
+- Password: 1234
+
+##### Demo user 5:
+- Name: Susan
+- Username: SnoozeinSusan
+- Password: zzz
 
 # How to use Recipe Community
 
@@ -66,7 +85,9 @@ At this point you should be able to connect to the app through your browser via 
 
 #### Note: 
 
-The database container takes a bit to fully spin up to a usable state, certain functionality will return errors until it becomes accessible. 
+The database container takes a bit to fully spin up to a usable state the first time you run the application.
+Given this, certain functionality will return errors until it becomes accessible. 
+After the first run the database should initialize much faster with locally stored data.
 
 To shutdown the Docker containers simply do the following:
 
@@ -84,20 +105,18 @@ Currently the directory structure for Recipe Community is as follows:
 rc
 |
 |_ db
-|   |_ dump.sql
+|   |_ init/ [contains the init schema and demo data]
+|   |_ data/ [will be generated on first run]
 |
 |_ www
-    |_ [application files; html, php]
+    |_ [application files; html, php, css]
 
 ```
 
-The `db` directory contains the SQL file that will be used for initializing the DB when the containers start.
+The `db` directory contains the SQL files that will be used for initializing the DB when the containers start.
 
 The `www` directory contains the HTML and PHP files that make up the body of the application.
 
 The files that relate to the Docker containers are located in the root directory of the project.
 
-# Notes
-
-Recipe Community is currently under early development.
-It will be iterated upon and improved.
+## This is the repo for group 5's 4900 group project
