@@ -3,6 +3,7 @@ body {
     background-color: #000;
     margin: 0;
     padding: 0;
+    color: #fff; /* Set text color to white */
 }
 
 .home {
@@ -34,15 +35,16 @@ label {
     color: #fff;
 }
 
-input {
+input,
+textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     box-sizing: border-box;
-    border: 1px solid #fff; /* change border color to white */
+    border: 1px solid #fff;
     border-radius: 4px;
-    background-color: #000; /* change background color to black */
-    color: #fff; /* change text color to white */
+    background-color: #000;
+    color: #fff;
 }
 
 button {
@@ -73,20 +75,28 @@ a:hover {
     text-decoration: underline;
 }
 
-.success {
-    color: #fff;
+.error-container {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .error {
-    color: #fff;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffcccc;
+    color: #ff0000;
+    border-radius: 5px;
 }
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    border: 1px solid #fff; /* change border color to white */
-    border-radius: 4px;
-    background-color: #000; /* change background color to black */
-    color: #fff; /* change text color to white */
+
+.success-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.success {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ccffcc;
+    color: #00ff00;
+    border-radius: 5px;
 }
