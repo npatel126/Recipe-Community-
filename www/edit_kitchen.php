@@ -107,7 +107,7 @@ while ($stmt->fetch()) {
 
 // kitchens with no cookbooks will still return a null one
 if (current($cookbook_ids) === null) {
-    $cookbook_ids = null;
+    $cookbook_ids = array();
 }
 
 // get info to display all of the users cookbooks
