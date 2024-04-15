@@ -93,8 +93,8 @@ if ($_SESSION['darkmode']) {
             </table>
         </section>
         <section>
-            <h1>Kitchen actions</h1>
-            <?php print("<button onclick=\"window.location.href = 'edit_kitchen.php?link=$kitchen_id' \">Edit this kitchen</button>"); ?>
+        <h1>Kitchen actions</h1>
+        <input type='submit' onclick="window.location.href = 'edit_kitchen.php?link=<?php echo $kitchen_id; ?>'" value="Edit this kitchen">
         </section>
     </main>
     <form>
