@@ -30,6 +30,40 @@ if ($result) {
 } else {
     $user_name = "Guest";
 }
+
+
+
+// get recipes that are not created by the user, in the user's cookbook, or in the user's favorites
+$recipe_id = $recipe_name = $recipe_desc = null;
+$query = "SELECT recipe_id, name FROM recipes WHERE recipe_id NOT IN ( SELECT recipe_id FROM recipes WHERE creator_id = 2 UNION SELECT recipe_id FROM favorites_recipes WHERE favorite_id IN ( SELECT favorite_id FROM favorites WHERE owner_id = 2 ) UNION SELECT recipe_id FROM cookbooks_recipes WHERE cookbook_id IN ( SELECT cookbook_id FROM cookbooks WHERE owner_id = 2 ) )";
+
+$stmt = mysqli_prepare($connect, $query);
+if ($stmt = $connect->prepare($query)) {
+    $stmt->execute();
+    $stmt->bind_result($recipe_id, $recipe_name);
+}
+
+$discovery_arr = array();
+while ($stmt->fetch()) {
+    $discovery_arr[$recipe_id] = $recipe_name;
+}
+
+$stmt->close();
+
+$qMark_arr = join(',', array_fill(0, count($discovery_arr), '?')); // turning the array of cookbooks into '?' for stmt
+$query = "SELECT recipe_id, description FROM recipes WHERE recipe_id IN ($qMark_arr)";
+$stmt = mysqli_prepare($connect, $query);
+mysqli_stmt_bind_param($stmt, str_repeat('i', count($discovery_arr)), ...array_keys($discovery_arr));
+mysqli_stmt_execute($stmt);
+mysqli_stmt_bind_result($stmt, $recipe_id, $recipe_desc);
+
+$desc_arr = array();
+while ($stmt->fetch()) {
+    $desc_arr[$recipe_id] = $recipe_desc;
+}
+
+mysqli_stmt_close($stmt);
+
 mysqli_close($connect);
 ?>
 <!DOCTYPE html>
@@ -53,6 +87,29 @@ mysqli_close($connect);
         <?php endif; ?>
     </header>
     <main>
+        <section>
+            <h2>Recipes for you to discover!</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>View!</th>
+                </tr>
+                <?php
+                // randomly select a recipe(s) from the array for display & only display each recipe once
+                $count = 0;
+                $already_discovered = array();
+                do {
+                    $discovery = array_rand($discovery_arr);
+                    if (!in_array($discovery, $already_discovered)) {
+                        array_push($already_discovered, $discovery);
+                        print("<tr><td>$discovery_arr[$discovery]</td><td>$desc_arr[$discovery]</td><td><a href=\"view_recipe.php?link=$discovery\">View this recipe!</a></td></tr>");
+                        $count++;
+                    }
+                } while ($count < 5);
+                ?>
+            </table>
+        </section>
         <section>
             <h2>Actions</h2>
             <ul>
