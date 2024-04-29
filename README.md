@@ -1,6 +1,14 @@
 # Recipe-Community-
 
-# About Recipe-Community
+## Table of Contents
+
+[About Recipe-Community](#About-Recipe-Community)
+[Try it out!](#Try-it-out!)
+[How to run Recipe Community](#How-to-run-Recipe-Community)
+[About Recipe-Community](#About-Recipe-Community)
+[Directory structure](#Directory-structure)
+[Recipe JSON structure](#Recipe-JSON-structure)
+[Important Information and Warnings](#Important-Information-and-Warnings)
 
 Recipe Community aims to be an app for cooking enthusiasts and food lovers who are looking for a user-friendly way to discover, save, and share recipes with other like-minded chefs. Recipe Community is a collaborative culinary platform that simplifies the process of finding and curating delicious dishes.
 
@@ -148,6 +156,8 @@ The files that relate to the Docker containers are located in the root directory
 }
 ```
 
+# Important Information and Warnings
+
 > [!WARNING]
 > !!! EXPOSING THIS APPLICATION TO THE INTERNET IS NOT ADVISED !!!
 >
@@ -167,7 +177,7 @@ The files that relate to the Docker containers are located in the root directory
 >
 > IT IS ADVISED THAT YOU ALTER THE ADMINISTRATOR CREDENTIALS 
 >
-> The default credentials are admin:pwd
+> The default credentials are `admin:pwd`
 
 
 # Recipe Community is Group 5's 4900 group project.
