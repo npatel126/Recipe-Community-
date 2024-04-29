@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $cookbook_name = '';
 $recipe_id = null;
 $recipe_name = '';
-$query = "SELECT cookbooks.name, recipes.recipe_id, recipes.name FROM cookbooks LEFT JOIN cookbooks_recipes ON cookbooks.cookbook_id = cookbooks_recipes.cookbook_id LEFT JOIN recipes ON recipes.recipe_id = cookbooks_recipes.recipe_id LEFT JOIN favorites_recipes ON recipes.recipe_id = favorites_recipes.recipe_id LEFT JOIN favorites ON favorites.favorite_id = favorites_recipes.favorite_id WHERE (cookbooks.cookbook_id = $cookbook_id AND cookbooks.owner_id = $owner_id) OR (favorites.owner_id = $owner_id)";
+$query = "SELECT cookbooks.name, recipes.recipe_id, recipes.name FROM cookbooks LEFT JOIN cookbooks_recipes ON cookbooks.cookbook_id = cookbooks_recipes.cookbook_id LEFT JOIN recipes ON recipes.recipe_id = cookbooks_recipes.recipe_id WHERE cookbooks.cookbook_id = $cookbook_id AND cookbooks.owner_id = $owner_id";
 $stmt = mysqli_prepare($connect, $query);
 if ($stmt = $connect->prepare($query)) {
     $stmt->execute();
@@ -98,6 +98,7 @@ while ($stmt->fetch()) {
     $recipe_ids[$recipe_id] = $recipe_name;
 }
 
+// cookbooks with no recipes will still return a null one
 if (current($recipe_ids) === null) {
     $recipe_ids = null;
 }
