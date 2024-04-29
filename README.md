@@ -33,12 +33,14 @@ Download and run Recipe Community, then use one of these demo users to try it ou
 - Username: SnoozeinSusan
 - Password: zzz
 
-Or you can create your own account!
+#### Or you can create your own account!
 
 Once you've logged into Recipe Community take a look around!
 You can add recipes, create kitchens and cookbooks, and search for recipes that you want to add to your repertoire.
 To add a cookbook to a kitchen or a recipe to a cookbook, simply select what you would like to add!
 If you find a recipe that you like you can add it to your favorites as well!
+You can also download and share recipes with your community! 
+Recipes can be downloaded and uploaded using [JSON files](#Recipe-JSON-structure) so that your recipes remain easily readable and editable, even when not in the application.
 
 Bon appétit!
 
@@ -90,7 +92,7 @@ This option can be useful if you plan to use that terminal for other things.
 
 It should also be possible to launch the containers from the Docker Desktop application, however this has not been tested at this time.
 
-At this point you should be able to connect to the app through your browser via localhost.
+**At this point you should be able to connect to the app through your browser via `localhost`.**
 
 #### Note: 
 
@@ -128,4 +130,39 @@ The `www` directory contains the HTML and PHP files that make up the body of the
 
 The files that relate to the Docker containers are located in the root directory of the project.
 
-## This is the repo for Group 5's 4900 group project.
+# Recipe JSON structure
+
+```json
+{
+  "name": "test",
+  "description": "test",
+  "category": "test",
+  "cuisine": "test",
+  "ingredients": "test",
+  "instructions": "test",
+  "prep_time": 1,
+  "cook_time": 2,
+  "total_time": 3,
+  "servings": 1,
+  "creator_id": 1
+}
+```
+
+> [!WARNING]
+> !!! EXPOSING THIS APPLICATION TO THE INTERNET IS NOT ADVISED !!!
+> THE APPLICATION HAS NOT BEEN THOROUGHLY TESTED TO ENSURE ITS SAFETY 
+> DO SO AT YOUR OWN RISK
+
+> [!WARNING]
+> !!! KEEP THE `data/` DIRECTORY PRIVATE !!! 
+> IT CONTAINS SECRETS 
+
+> [!IMPORTANT]
+> IT IS GENERALLY ADVISABLE THAT YOU REVIEW AND EDIT ALL OF THE APPLICATION'S DEFAULT VARIABLES
+> 
+> phpmyadmin is accessible on port 8080
+> IT IS ADVISED THAT YOU ALTER THE ADMINISTRATOR CREDENTIALS 
+> The default credentials are admin:pwd
+
+
+# This is the repository for Group 5's 4900 group project.
