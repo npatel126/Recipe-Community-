@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in
 if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
-    //echo "Welcome, " . $_SESSION["username"];
+    // TODO: invert this logic (basically everywhere?)
 } else {
     header("Location: index.php");
     exit;
@@ -12,21 +12,23 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
 $user_id = $_SESSION["user_id"];
 
- // Toggle style session variable
- if ($_SESSION['darkmode']) {
+// Toggle style session variable
+if ($_SESSION['darkmode']) {
     $style = "css/view_list(dark).css";
-    } else {
+} else {
     $style = "css/view_list.css";
-    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Recipe Page</title>
     <link rel="stylesheet" href="<?php echo $style; ?>">
 </head>
+
 <body>
     <?php
     // Include favorites functions file
@@ -40,6 +42,7 @@ $user_id = $_SESSION["user_id"];
 
     $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to the database server' . mysqli_connect_error());
 
+    // get incoming recipe_id
     $search = $_GET['link'];
     // init vars for query return
     $recipe_id = "";
@@ -112,7 +115,6 @@ $user_id = $_SESSION["user_id"];
     // close statement
     $stmt->close();
 
-
     // add/remove from favorites
     // if not in favorites display add 
     // if in favorites display remove
@@ -136,12 +138,20 @@ $user_id = $_SESSION["user_id"];
 
     // close connection with db
     mysqli_close($connect);
+
+    // TODO: I'd love for this to be in a button or something nicer looking 
+    // the whole thing feels hacky but it does work
+    // there's most certainly a better way
+    print("<a href=\"./download_recipe.php?link=$recipe_id\">Download this recipe!</a>")
     ?>
+
+
     <form>
         <p>
             <input type="submit" formaction="./recipe_search.php" value="Search Again!">
-            <input type="submit" formaction="./dashboard.php" value="Return to Dashboard">
+            <input type="submit" formaction="./dashboard.php" value="Return to Dashboard.">
         </p>
     </form>
 </body>
+
 </html>
