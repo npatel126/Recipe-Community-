@@ -8,7 +8,7 @@
 
 [How to run Recipe Community](#How-to-run-Recipe-Community)
 
-[About Recipe-Community](#About-Recipe-Community)
+[How to launch Recipe Community](#How-to-launch-Recipe-Community)
 
 [Directory structure](#Directory-structure)
 
