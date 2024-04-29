@@ -136,7 +136,7 @@ rc
 |   |_ data/ [will be generated on first run]
 |
 |_ www
-    |_ [application files; html, php, css]
+|   |_ [application files; html, php, css]
 |
 |_ Dockerfile
 |
