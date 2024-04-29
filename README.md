@@ -4,7 +4,7 @@
 
 [About Recipe-Community](#About-Recipe-Community)
 
-[Try it out!](#Try-it-out!)
+[Try it out!](#Try-it-out)
 
 [How to run Recipe Community](#How-to-run-Recipe-Community)
 
