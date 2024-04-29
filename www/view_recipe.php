@@ -94,18 +94,28 @@ if ($_SESSION['darkmode']) {
         $formatted_cook = format_time($cook_time);
         $formatted_total = format_time($total_time);
         print("<h1>$name</h1>");
+        print("<br>");
         print("<h2>Creator: $creator_username </h2>");
+        print("<br>");
         print("<h3>Description: $description </h3>");
+        print("<br>");
         print("<h3>Category: $category </h3>");
+        print("<br>");
         print("<h3>Cuisine: $cuisine </h3>");
+        print("<br>");
         print("<h3>Prep time: $formatted_prep </h3>");
+        print("<br>");
         print("<h3>Cook time: $formatted_cook </h3>");
+        print("<br>");
         print("<h3>Total time: $formatted_total </h3>");
+        print("<br>");
         print("<h3>Servings: $servings</h3>");
+        print("<br>");
         print("<h4>Ingredients:</h4>");
         for ($i = 0; $i < sizeof($ingredients_list); $i++) {
             print("<p><input type=\"checkbox\"/> $ingredients_list[$i]</p>");
         }
+        print("<br>");
         print("<h4>Instructions:</h4>");
         // TODO: consider checking if the first position in each string is a number and if not display one??
         for ($i = 0; $i < sizeof($instructions_list); $i++) {
