@@ -118,6 +118,7 @@ mysqli_close($connect);
                     <li><button onclick="window.location.href = 'user_cookbooks.php';">My Cookbooks</button></li>
                     <li><button onclick="window.location.href = 'recipe_search.php';">Search Recipes</button></li>
                     <li><button onclick="window.location.href = 'add_recipe.php';">Add Recipe</button></li>
+                    <li><button onclick="window.location.href = 'upload_recipe.php';">Upload Recipe</button></li>
                     <li><button onclick="window.location.href = 'user_recipes.php';">View Your Recipes</button></li>
                     <li><button onclick="window.location.href = 'view_favorites.php';">View Your Favorite Recipes</button></li>
                     <li><button onclick="window.location.href = 'user_settings.php';">My Settings</button></li>
