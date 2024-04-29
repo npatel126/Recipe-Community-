@@ -16,6 +16,8 @@
 
 [Important Information and Warnings](#Important-Information-and-Warnings)
 
+# About Recipe-Community
+
 Recipe Community aims to be an app for cooking enthusiasts and food lovers who are looking for a user-friendly way to discover, save, and share recipes with other like-minded chefs. Recipe Community is a collaborative culinary platform that simplifies the process of finding and curating delicious dishes.
 
 # Try it out!
