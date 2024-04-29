@@ -137,14 +137,21 @@ rc
 |
 |_ www
     |_ [application files; html, php, css]
-
+|
+|_ Dockerfile
+|
+|_ docker-compose
+|
+|_ README
 ```
 
-The `db` directory contains the SQL files that will be used for initializing the DB when the containers start.
+- The `db` directory contains the SQL files that will be used for initializing the DB when the containers start.
+    - `init-rc` contains the database's table schemas.
+    - Don't want the default users or data? Simply remove the `rc-data` file before initializing Recipe Community!
 
-The `www` directory contains the HTML and PHP files that make up the body of the application.
+- The `www` directory contains the PHP, CSS, & HTML files that make up the body of the application.
 
-The files that relate to the Docker containers are located in the root directory of the project.
+- Files relating to the Docker containers themselves are located in the root directory of the project.
 
 # Recipe JSON structure
 
@@ -169,7 +176,7 @@ The files that relate to the Docker containers are located in the root directory
 > [!WARNING]
 > !!! EXPOSING THIS APPLICATION TO THE INTERNET IS NOT ADVISED !!!
 >
-> THE APPLICATION HAS NOT BEEN THOROUGHLY TESTED TO ENSURE ITS SAFETY 
+> THE APPLICATION HAS NOT BEEN THOROUGHLY TESTED TO ENSURE ITS SAFETY & SECURITY
 >
 > DO SO AT YOUR OWN RISK
 
@@ -179,7 +186,7 @@ The files that relate to the Docker containers are located in the root directory
 > IT CONTAINS SECRETS 
 
 > [!IMPORTANT]
-> IT IS GENERALLY ADVISABLE THAT YOU REVIEW AND EDIT ALL OF THE APPLICATION'S DEFAULT VARIABLES
+> IT IS GENERALLY ADVISABLE THAT YOU REVIEW AND EDIT ALL OF THE APPLICATION'S DEFAULT VARIABLES TO SUIT YOUR INDIVIDUAL NEEDS
 > 
 > phpmyadmin is accessible on port 8080
 >
