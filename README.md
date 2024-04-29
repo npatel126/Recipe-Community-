@@ -3,11 +3,17 @@
 ## Table of Contents
 
 [About Recipe-Community](#About-Recipe-Community)
+
 [Try it out!](#Try-it-out!)
+
 [How to run Recipe Community](#How-to-run-Recipe-Community)
+
 [About Recipe-Community](#About-Recipe-Community)
+
 [Directory structure](#Directory-structure)
+
 [Recipe JSON structure](#Recipe-JSON-structure)
+
 [Important Information and Warnings](#Important-Information-and-Warnings)
 
 Recipe Community aims to be an app for cooking enthusiasts and food lovers who are looking for a user-friendly way to discover, save, and share recipes with other like-minded chefs. Recipe Community is a collaborative culinary platform that simplifies the process of finding and curating delicious dishes.
