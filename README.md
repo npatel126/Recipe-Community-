@@ -150,19 +150,24 @@ The files that relate to the Docker containers are located in the root directory
 
 > [!WARNING]
 > !!! EXPOSING THIS APPLICATION TO THE INTERNET IS NOT ADVISED !!!
+>
 > THE APPLICATION HAS NOT BEEN THOROUGHLY TESTED TO ENSURE ITS SAFETY 
+>
 > DO SO AT YOUR OWN RISK
 
 > [!WARNING]
 > !!! KEEP THE `data/` DIRECTORY PRIVATE !!! 
+>
 > IT CONTAINS SECRETS 
 
 > [!IMPORTANT]
 > IT IS GENERALLY ADVISABLE THAT YOU REVIEW AND EDIT ALL OF THE APPLICATION'S DEFAULT VARIABLES
 > 
 > phpmyadmin is accessible on port 8080
+>
 > IT IS ADVISED THAT YOU ALTER THE ADMINISTRATOR CREDENTIALS 
+>
 > The default credentials are admin:pwd
 
 
-# This is the repository for Group 5's 4900 group project.
+# Recipe Community is Group 5's 4900 group project.
