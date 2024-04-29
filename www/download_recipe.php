@@ -29,7 +29,6 @@ $connect = mysqli_connect($server, $user, $pw, $db) or die('Could not connect to
 
 $search = $_GET['link'];
 // init vars for query return
-$recipe_id = "";
 $name = "";
 $description = "";
 $category = "";
@@ -44,7 +43,7 @@ $creator_id = "";
 $creator_username = "";
 
 // Search DB for recipe(s) matching description
-$query = "SELECT r.recipe_id, r.name, r.description, r.category, r.cuisine, r.ingredients, r.instructions, r.prep_time, r.cook_time, r.total_time, r.servings, r.creator_id, u.username
+$query = "SELECT r.name, r.description, r.category, r.cuisine, r.ingredients, r.instructions, r.prep_time, r.cook_time, r.total_time, r.servings, r.creator_id, u.username
             FROM recipes r
             INNER JOIN users u ON r.creator_id = u.user_id
             WHERE r.recipe_id = '$search'; ";
@@ -53,11 +52,11 @@ $stmt = mysqli_prepare($connect, $query);
 
 if ($stmt = $connect->prepare($query)) {
     $stmt->execute();
-    $stmt->bind_result($recipe_id, $name, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id, $creator_username);
+    $stmt->bind_result($name, $description, $category, $cuisine, $ingredients, $instructions, $prep_time, $cook_time, $total_time, $servings, $creator_id, $creator_username);
 }
 
 while ($stmt->fetch()) {
-    $export_arr = array('recipe_id' => $recipe_id, 'name' => $name, 'description' => $description, 'category' => $category, 'cuisine' => $cuisine, 'ingredients' => $ingredients, 'instructions' => $instructions, 'prep_time' => $prep_time, 'cook_time' => $cook_time, 'total_time' => $total_time, 'servings' => $servings, 'creator_id' => $creator_id);
+    $export_arr = array('name' => $name, 'description' => $description, 'category' => $category, 'cuisine' => $cuisine, 'ingredients' => $ingredients, 'instructions' => $instructions, 'prep_time' => $prep_time, 'cook_time' => $cook_time, 'total_time' => $total_time, 'servings' => $servings, 'creator_id' => $creator_id);
 }
 
 // close statement
