@@ -12,7 +12,7 @@ body {
 
 /* Container styles */
 .home {
-    max-width: 800px;
+    max-width: 75%;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
