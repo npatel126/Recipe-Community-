@@ -2,18 +2,21 @@
 // Start the session
 session_start();
 
+// Check if the user is logged in
 if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
     //echo "Welcome, " . $_SESSION["username"];
 } else {
     header("Location: index.php");
     exit;
 }
+
 // Toggle style session variable
 if ($_SESSION['darkmode']) {
     $style = "css/login_register(dark).css";
-    } else {
+} else {
     $style = "css/login_register.css";
-    }
+}
+
 // Database connection details
 $server = "db";
 $user = "admin";
@@ -30,13 +33,15 @@ function br2pipe($input)
     return preg_replace($pattern, $replacement, $input, -1);
 }
 
-
 // Retrieve the user ID from the session
 $user_id = $_SESSION['user_id'];
 
 // Initialize variables to store recipe details
 $name = $description = $category = $cuisine = $ingredients = $instructions = "";
 $prep_time = $cook_time = $total_time = $servings = 0;
+
+// Initialize error message variable
+$error_message = "";
 
 // Check if the recipe_id parameter is set in the URL
 if (isset($_GET['recipe_id'])) {
@@ -62,7 +67,7 @@ if (isset($_GET['recipe_id'])) {
             header("Location: user_recipes.php");
             exit;
         } else {
-            echo "Failed to delete the recipe.";
+            $error_message = "Failed to delete the recipe.";
         }
         
         // Close the delete statement
@@ -96,9 +101,9 @@ if (isset($_GET['recipe_id'])) {
 
         // Check if any rows were affected
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "Recipe updated successfully!";
+            $success_message = "Recipe updated successfully!";
         } else {
-            echo "Failed to update the recipe.";
+            $error_message = "Failed to update the recipe.";
         }
 
         // Close the statement
@@ -131,15 +136,8 @@ if (isset($_GET['recipe_id'])) {
 mysqli_close($connect);
 
 // Remove the pipe character from ingredients and instructions
-// &#13; Carriage Return
-// &#10; Line Feed 
-// TODO: this dispalays a new line, however it also keeps it around when so when it goes back to the db it has 2 "||" and just grows with each edit save
-// TODO: we're also getting spaces that are appearing out of nowhere?
-//print_r(htmlspecialchars($ingredients));
 $ingredients = str_replace('|', '&#10;', $ingredients);
 $instructions = str_replace('|', '&#10;', $instructions);
-
-//print_r(htmlspecialchars($ingredients));
 
 ?>
 
@@ -155,6 +153,16 @@ $instructions = str_replace('|', '&#10;', $instructions);
 
 <body>
     <main>
+        <?php if (!empty($error_message)) : ?>
+            <div class="error-container">
+                <div class="error"><?php echo $error_message; ?></div>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($success_message)) : ?>
+            <div class="success-container">
+                <div class="success"><?php echo $success_message; ?></div>
+            </div>
+        <?php endif; ?>
         <h1>Edit Recipe</h1>
         <form action="" method="post">
             <label for="name">Name:</label>
