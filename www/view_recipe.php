@@ -149,10 +149,11 @@ if ($_SESSION['darkmode']) {
     // close connection with db
     mysqli_close($connect);
 
-    // TODO: I'd love for this to be in a button or something nicer looking 
-    // the whole thing feels hacky but it does work
-    // there's most certainly a better way
-    print("<a href=\"./download_recipe.php?link=$recipe_id\">Download this recipe!</a>")
+    //Show download button
+    print("<form method=\"get\" action=\"./download_recipe.php\">");
+    print("<input type=\"hidden\" name=\"link\" value=\"$recipe_id\">");
+    print("<button type=\"submit\" style=\"background-color: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-right: 10px;\">Download this recipe!</button>");
+    print("</form>");
     ?>
 
 
