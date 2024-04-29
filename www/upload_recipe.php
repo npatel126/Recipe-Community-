@@ -12,9 +12,9 @@ if (isset($_SESSION["username"]) && $_SESSION["loggedin"] == TRUE) {
 
 // Toggle style session variable
 if ($_SESSION['darkmode']) {
-    $style = "css/view_list(dark).css";
+    $style = "css/upload_recipe(dark).css";
 } else {
-    $style = "css/view_list.css";
+    $style = "css/upload_recipe.css";
 }
 
 // Initialize variables for errors and success message
